@@ -4,6 +4,7 @@ import { Icon } from "@/components/Icon";
 import { MapEmbed } from "@/components/MapEmbed";
 import { OpenStatus } from "@/components/OpenStatus";
 import { Photo } from "@/components/Photo";
+import { GoogleReviewsSection } from "@/components/GoogleReviews";
 import { SpecialsBoard } from "@/components/SpecialsBoard";
 import { business } from "@/content/business";
 import { categories } from "@/content/categories";
@@ -238,6 +239,9 @@ export default function HomePage() {
           </p>
         </div>
       </section>
+
+      {/* Live Google rating and reviews */}
+      <GoogleReviewsSection />
 
       {/* Specials */}
       <section aria-labelledby="specials-heading" className="border-y border-ink/10 bg-paper/60">

@@ -1,4 +1,5 @@
 import { Icon } from "@/components/Icon";
+import { GoogleRatingSummary } from "@/components/GoogleReviews";
 import { MapEmbed } from "@/components/MapEmbed";
 import { OpenStatus } from "@/components/OpenStatus";
 import { PageIntro } from "@/components/PageIntro";
@@ -83,11 +84,14 @@ export default function VisitPage() {
                 <span className="sr-only">(opens in a new tab)</span>
               </a>
             </div>
+            <div className="mt-6">
+              <GoogleRatingSummary />
+            </div>
             <a
               href={business.links.googleMapsListing}
               target="_blank"
               rel="noopener noreferrer"
-              className="link mt-5 inline-flex items-center gap-2 font-semibold text-crate"
+              className="link mt-3 inline-flex items-center gap-2 font-semibold text-crate"
             >
               Photos and reviews on Google Maps <Icon name="external" />
               <span className="sr-only">(opens in a new tab)</span>

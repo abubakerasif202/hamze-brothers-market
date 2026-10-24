@@ -47,6 +47,7 @@ Optional environment variables (see `.env.example`):
 | --- | --- | --- |
 | `NEXT_PUBLIC_SITE_URL` | Vercel production URL | Canonical URL for metadata, sitemap and structured data |
 | `NEXT_PUBLIC_SITE_INDEXABLE` | unset (= hidden) | Launch switch, see below |
+| `GOOGLE_PLACES_API_KEY` | unset | Server-only key for the live Google rating and reviews, see below |
 
 ### Launch switch
 
@@ -57,6 +58,23 @@ While `NEXT_PUBLIC_SITE_INDEXABLE` is not `true`:
 - `/robots.txt` disallows all crawling
 
 **To launch:** in Vercel → Project → Settings → Environment Variables, set `NEXT_PUBLIC_SITE_INDEXABLE=true` and `NEXT_PUBLIC_SITE_URL=https://<final-domain>` for Production, then redeploy. Then submit `/sitemap.xml` in Google Search Console. Update the Google Business Profile website link too.
+
+### Google rating and reviews
+
+The home page ("What shoppers say") and the Visit page show the shop's **live** Google rating, review count and up to five reviews from its Google Maps listing (place ID in `business.googlePlaceId`).
+
+- Data comes from Google Places API (New) through `/api/google-reviews` (`src/lib/google-reviews.ts`). It is fetched **at request time and never cached or stored**, as Google's Places policies require. It loads only when a visitor scrolls near the section.
+- Reviews are shown unedited, in Google's "most relevant" order, with the reviewer's name, photo and profile link, a link to each review on Google Maps, a "Translated by Google" note where relevant, and "Google Maps" attribution. Nothing is filtered by star rating.
+- The rating is **not** added to the structured data (Google doesn't allow third-party reviews to be used as self-serving review markup).
+- Without a key, or if Google is unreachable, both places show a "Read reviews on Google Maps" link instead. No numbers are ever hard-coded.
+
+**To switch it on** (needs a Google Cloud account with billing, chosen by the business or studio):
+
+1. In Google Cloud Console, create or choose a project and enable **Places API (New)**.
+2. Create an API key. Under *API restrictions*, allow **Places API (New)** only.
+3. Under *Quotas* for Places API (New), set a daily request cap (e.g. 500/day) so costs stay bounded. Reviews and rating are billed as Place Details (Enterprise + Atmosphere); check current pricing and free usage.
+4. In Vercel → Project → Settings → Environment Variables, add `GOOGLE_PLACES_API_KEY` for Production (and Preview if wanted), then redeploy.
+5. Check `https://<site>/api/google-reviews` returns `"status":"ok"`.
 
 ## Updating content
 
@@ -114,6 +132,7 @@ The **Online Shopping Preview** (`/shop`) exists to show the owners how online s
 
 - **Opening hours:** 8:00am–9:30pm, 7 days, matching both the Instagram bio and the Google Maps listing (checked 25 Oct 2026). Keep Google, Instagram and `business.ts` in sync when hours change.
 - **Parking:** "parking available at the back of Guildford Plaza" comes from an Instagram post. Please confirm.
+- Whether to switch on the live Google reviews (needs a Google Cloud key with billing, see above).
 - Phone number and email, if they want them published.
 - Holiday trading hours (Christmas, New Year, Easter, Eid).
 - Original store photos and short videos (portrait clips under 30 s are ideal). The featured Instagram reel is linked rather than embedded, so no Instagram scripts or tracking load on the site.
