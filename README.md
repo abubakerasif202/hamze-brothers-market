@@ -112,7 +112,7 @@ The **Online Shopping Preview** (`/shop`) exists to show the owners how online s
 
 ## Information to confirm with the owners
 
-- **Opening hours:** the Instagram bio says 8:00am–9:30pm, 7 days. One older post said 7:30am. The site uses 8:00am.
+- **Opening hours:** 8:00am–9:30pm, 7 days, matching both the Instagram bio and the Google Maps listing (checked 25 Oct 2026). Keep Google, Instagram and `business.ts` in sync when hours change.
 - **Parking:** "parking available at the back of Guildford Plaza" comes from an Instagram post. Please confirm.
 - Phone number and email, if they want them published.
 - Holiday trading hours (Christmas, New Year, Easter, Eid).

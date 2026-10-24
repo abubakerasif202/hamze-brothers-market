@@ -89,7 +89,7 @@ export default function VisitPage() {
               rel="noopener noreferrer"
               className="link mt-5 inline-flex items-center gap-2 font-semibold text-crate"
             >
-              View the Google Maps listing <Icon name="external" />
+              Photos and reviews on Google Maps <Icon name="external" />
               <span className="sr-only">(opens in a new tab)</span>
             </a>
           </div>

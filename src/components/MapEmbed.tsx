@@ -18,8 +18,11 @@ export function MapEmbed() {
   useEffect(() => {
     if (loaded) frameRef.current?.focus();
   }, [loaded]);
-  const { latitude, longitude } = business.geo;
-  const src = `https://www.google.com/maps?q=${latitude},${longitude}&z=17&output=embed`;
+  // Search by name + address so the embed shows the business's own listing card, not a bare pin.
+  const query = encodeURIComponent(
+    `${business.name}, ${business.address.streetShort}, ${business.address.suburb} ${business.address.state} ${business.address.postcode}`,
+  );
+  const src = `https://www.google.com/maps?q=${query}&z=17&output=embed`;
 
   return (
     <div className="relative aspect-square overflow-hidden rounded-[var(--radius-tile)] bg-crate-soft sm:aspect-[16/10]">

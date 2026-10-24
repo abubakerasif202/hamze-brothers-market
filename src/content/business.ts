@@ -45,12 +45,14 @@ export const business = {
     country: "AU",
   },
 
-  /** Source: Google Maps listing supplied by AB Web Studio (Oct 2026). */
+  /** Source: Google Maps listing (https://maps.app.goo.gl/srSYqLVz4QsCJh4x7), checked 25 Oct 2026. */
   geo: { latitude: -33.8544627, longitude: 150.9874093 },
+  /** Google Place ID for the listing above; used so directions land on the business itself. */
+  googlePlaceId: "ChIJGwQwlcS9EmsRjPzZew1lE_8",
 
   /**
-   * Source: Instagram bio ("OPEN 7 DAYS | 8:00AM - 9:30PM") and brief.
-   * Note: one older Instagram post mentions 7:30am — confirm with the owners.
+   * Source: Instagram bio ("OPEN 7 DAYS | 8:00AM - 9:30PM") and the Google Maps
+   * listing (Monday–Sunday 8:00am–9:30pm), checked 25 Oct 2026.
    */
   hours: {
     mon: everyDay,
@@ -82,7 +84,7 @@ export const business = {
     featuredReel: "https://www.instagram.com/reel/DetxR1dTxrf/",
     googleMapsListing: "https://maps.app.goo.gl/srSYqLVz4QsCJh4x7",
     googleDirections:
-      "https://www.google.com/maps/dir/?api=1&destination=Hamze%20Brothers%20Fruit%20Market%2C%20282%20Guildford%20Rd%2C%20Guildford%20NSW%202161",
+      "https://www.google.com/maps/dir/?api=1&destination=Hamze%20Brothers%20Fruit%20Market%2C%20282%20Guildford%20Rd%2C%20Guildford%20NSW%202161&destination_place_id=ChIJGwQwlcS9EmsRjPzZew1lE_8",
     appleDirections:
       "https://maps.apple.com/?daddr=282%20Guildford%20Rd%2C%20Guildford%20NSW%202161&q=Hamze%20Brothers%20Fruit%20Market",
   },
