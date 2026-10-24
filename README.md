@@ -66,7 +66,7 @@ The home page ("What shoppers say") and the Visit page show the shop's **live** 
 - Data comes from Google Places API (New) through `/api/google-reviews` (`src/lib/google-reviews.ts`). It is fetched **at request time and never cached or stored**, as Google's Places policies require. It loads only when a visitor scrolls near the section.
 - Reviews are shown unedited, in Google's "most relevant" order, with the reviewer's name, photo and profile link, a link to each review on Google Maps, a "Translated by Google" note where relevant, and "Google Maps" attribution. Nothing is filtered by star rating.
 - The rating is **not** added to the structured data (Google doesn't allow third-party reviews to be used as self-serving review markup).
-- Without a key, or if Google is unreachable, both places show a "Read reviews on Google Maps" link instead. No numbers are ever hard-coded.
+- **Until the key is added**, a hand-copied snapshot is shown instead: `src/content/google-reviews-snapshot.ts` (rating 5.0 from 8 reviews and four selected reviews, copied word for word on 25 Oct 2026, at the owner's request). The site labels it with that date. Keep it accurate or delete it; once the key is set the live data replaces it automatically. Note that Google's terms only allow review content to be shown live, so treat the snapshot as temporary.
 
 **To switch it on** (needs a Google Cloud account with billing, chosen by the business or studio):
 

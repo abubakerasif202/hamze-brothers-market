@@ -3,10 +3,51 @@
 import Image from "next/image";
 import { useEffect, useId, useRef, useState } from "react";
 import { business } from "@/content/business";
+import { googleReviewsSnapshot } from "@/content/google-reviews-snapshot";
 import type { GoogleReview, GoogleReviewsResult } from "@/lib/google-reviews";
 import { Icon } from "./Icon";
 
 type LoadState = { status: "idle" } | GoogleReviewsResult;
+
+interface DisplayData {
+  source: "live" | "snapshot";
+  rating: number | null;
+  ratingCount: number;
+  listingUrl: string;
+  reviews: GoogleReview[];
+}
+
+/** Hand-copied snapshot shown until the live Places API key is configured. */
+const snapshotData: DisplayData = {
+  source: "snapshot",
+  rating: googleReviewsSnapshot.rating,
+  ratingCount: googleReviewsSnapshot.ratingCount,
+  listingUrl: business.links.googleMapsListing,
+  reviews: googleReviewsSnapshot.reviews.map((r, i) => ({
+    id: `snapshot-${i}`,
+    rating: r.rating,
+    text: r.text,
+    translated: false,
+    relativeTime: "",
+    publishTime: null,
+    reviewUrl: business.links.googleMapsListing,
+    author: { name: r.author, url: null, photoUrl: null },
+  })),
+};
+
+/** Live Google data wins whenever it is available; otherwise the dated snapshot is shown. */
+function toDisplay(state: LoadState): DisplayData {
+  if (state.status === "ok" && (state.reviews.length > 0 || (state.rating !== null && state.ratingCount > 0))) {
+    return {
+      source: "live",
+      rating: state.rating,
+      ratingCount: state.ratingCount,
+      listingUrl: state.listingUrl ?? business.links.googleMapsListing,
+      reviews: state.reviews,
+    };
+  }
+  return snapshotData;
+}
 
 /** Loads live Google rating/reviews only when the section nears the viewport. */
 function useGoogleReviews<T extends HTMLElement>() {
@@ -49,7 +90,7 @@ function useGoogleReviews<T extends HTMLElement>() {
     };
   }, []);
 
-  return { ref, state };
+  return { ref, data: toDisplay(state) };
 }
 
 export function Stars({ rating, className = "" }: { rating: number; className?: string }) {
@@ -80,6 +121,7 @@ export function Stars({ rating, className = "" }: { rating: number; className?: 
 function ReviewItem({ review }: { review: GoogleReview }) {
   const [expanded, setExpanded] = useState(false);
   const long = review.text.length > 280;
+  const collapsed = long && !expanded;
   return (
     <li className="flex flex-col rounded-[var(--radius-tile)] border border-ink/10 bg-paper p-5 sm:p-6">
       <div className="flex items-center gap-3">
@@ -124,7 +166,10 @@ function ReviewItem({ review }: { review: GoogleReview }) {
           </p>
         </div>
       </div>
-      <p className={`mt-4 whitespace-pre-line text-ink ${long && !expanded ? "line-clamp-6" : ""}`}>{review.text}</p>
+      <p className={`mt-4 text-ink ${collapsed ? "line-clamp-6" : "whitespace-pre-line"}`}>
+        {/* Collapsed: join paragraphs so the clamp ellipsis lands mid-sentence, not on a blank line. */}
+        {collapsed ? review.text.replace(/\s*\n+\s*/g, " ") : review.text}
+      </p>
       {review.translated && <p className="mt-2 text-xs text-ink-soft">Translated by Google</p>}
       <div className="mt-auto flex flex-wrap items-center gap-x-4 gap-y-1 pt-4 text-sm font-semibold text-crate">
         {long && (
@@ -153,29 +198,11 @@ function ReviewItem({ review }: { review: GoogleReview }) {
   );
 }
 
-function FallbackCard() {
-  return (
-    <div className="rounded-[var(--radius-tile)] border border-ink/10 bg-paper p-6 sm:p-8">
-      <p className="max-w-xl text-lg text-ink-soft">
-        Read what shoppers say about {business.shortName} on its Google Maps listing.
-      </p>
-      <a
-        href={business.links.googleMapsListing}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="btn btn-primary mt-5"
-      >
-        Read reviews on Google Maps
-        <span className="sr-only">(opens in a new tab)</span>
-      </a>
-    </div>
-  );
-}
-
 /** Full reviews section for the home page. */
 export function GoogleReviewsSection() {
-  const { ref, state } = useGoogleReviews<HTMLElement>();
+  const { ref, data } = useGoogleReviews<HTMLElement>();
   const headingId = useId();
+  const hasRating = data.rating !== null && data.ratingCount > 0;
 
   return (
     <section ref={ref} aria-labelledby={headingId} className="bg-cream-deep">
@@ -184,83 +211,74 @@ export function GoogleReviewsSection() {
           <h2 id={headingId} className="sign text-[clamp(2.75rem,7vw,5rem)] text-crate">
             What shoppers say
           </h2>
-          {state.status === "ok" && state.rating !== null && state.ratingCount > 0 && (
+          {hasRating && (
             <div className="mt-6">
               <p className="flex items-end gap-3">
-                <span className="sign text-7xl text-crate">{state.rating.toFixed(1)}</span>
-                <Stars rating={state.rating} className="mb-2 text-2xl text-ink" />
+                <span className="sign text-7xl text-crate">{data.rating!.toFixed(1)}</span>
+                <Stars rating={data.rating!} className="mb-2 text-2xl text-ink" />
               </p>
               <p className="mt-1 text-ink-soft">
-                <span className="sr-only">Rated {state.rating.toFixed(1)} out of 5 </span>
-                from {state.ratingCount} {state.ratingCount === 1 ? "review" : "reviews"} on Google Maps
+                <span className="sr-only">Rated {data.rating!.toFixed(1)} out of 5 </span>
+                from {data.ratingCount} {data.ratingCount === 1 ? "review" : "reviews"} on Google Maps
+                {data.source === "snapshot" && <>, as of {googleReviewsSnapshot.capturedOnLabel}</>}
               </p>
             </div>
           )}
-          {state.status === "ok" && (
-            <a
-              href={state.listingUrl ?? business.links.googleMapsListing}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn-primary mt-6"
-            >
-              See all reviews on Google Maps
-              <span className="sr-only">(opens in a new tab)</span>
-            </a>
-          )}
+          <a href={data.listingUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary mt-6">
+            See all reviews on Google Maps
+            <span className="sr-only">(opens in a new tab)</span>
+          </a>
         </div>
 
-        <div aria-live="polite" aria-busy={state.status === "idle"}>
-          {state.status === "idle" && (
-            <ul className="grid gap-4 md:grid-cols-2" aria-hidden="true">
-              {[0, 1, 2, 3].map((i) => (
-                <li key={i} className="h-48 animate-pulse rounded-[var(--radius-tile)] bg-paper/70" />
-              ))}
-            </ul>
-          )}
-          {(state.status === "unconfigured" || state.status === "error") && <FallbackCard />}
-          {state.status === "ok" &&
-            (state.reviews.length === 0 ? (
-              <FallbackCard />
+        <div aria-live="polite">
+          <ul className="grid gap-4 md:grid-cols-2">
+            {data.reviews.map((r) => (
+              <ReviewItem key={r.id} review={r} />
+            ))}
+          </ul>
+          <p className="mt-5 text-sm text-ink-soft">
+            {data.source === "live" ? (
+              <>
+                Reviews from <span className="font-semibold whitespace-nowrap text-ink">Google Maps</span>, shown
+                unedited in Google&apos;s &ldquo;most relevant&rdquo; order (up to five). Reviews aren&apos;t verified
+                by Google, but Google checks for and removes fake content.
+              </>
             ) : (
               <>
-                <ul className="grid gap-4 md:grid-cols-2">
-                  {state.reviews.map((r) => (
-                    <ReviewItem key={r.id} review={r} />
-                  ))}
-                </ul>
-                <p className="mt-5 text-sm text-ink-soft">
-                  Reviews from <span className="font-semibold whitespace-nowrap text-ink">Google Maps</span>, shown
-                  unedited in Google&apos;s &ldquo;most relevant&rdquo; order (up to five). Reviews aren&apos;t verified
-                  by Google, but Google checks for and removes fake content.
-                </p>
+                A selection of reviews from{" "}
+                <span className="font-semibold whitespace-nowrap text-ink">Google Maps</span>, copied word for word.
+                Rating and reviews as shown on Google Maps on {googleReviewsSnapshot.capturedOnLabel}.
               </>
-            ))}
+            )}
+          </p>
         </div>
       </div>
     </section>
   );
 }
 
-/** Compact live rating line for the Visit page. Renders nothing unless Google returns a rating. */
+/** Compact rating line for the Visit page (live when available, otherwise the dated snapshot). */
 export function GoogleRatingSummary() {
-  const { ref, state } = useGoogleReviews<HTMLSpanElement>();
+  const { ref, data } = useGoogleReviews<HTMLSpanElement>();
+  if (data.rating === null || data.ratingCount === 0) return <span ref={ref} className="block min-h-6" />;
   return (
     <span ref={ref} className="block min-h-6">
-      {state.status === "ok" && state.rating !== null && state.ratingCount > 0 && (
-        <a
-          href={state.listingUrl ?? business.links.googleMapsListing}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex flex-wrap items-center gap-2 font-semibold text-crate hover:underline"
-        >
-          <Stars rating={state.rating} className="text-lg text-ink" />
-          <span>
-            {state.rating.toFixed(1)} out of 5 from {state.ratingCount} reviews on{" "}
-            <span className="whitespace-nowrap">Google Maps</span>
-          </span>
-          <span className="sr-only">(opens in a new tab)</span>
-        </a>
-      )}
+      <a
+        href={data.listingUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-flex flex-wrap items-center gap-2 font-semibold text-crate hover:underline"
+      >
+        <Stars rating={data.rating} className="text-lg text-ink" />
+        <span>
+          {data.rating.toFixed(1)} out of 5 from {data.ratingCount} reviews on{" "}
+          <span className="whitespace-nowrap">Google Maps</span>
+          {data.source === "snapshot" && (
+            <span className="font-normal text-ink-soft"> (as of {googleReviewsSnapshot.capturedOnLabel})</span>
+          )}
+        </span>
+        <span className="sr-only">(opens in a new tab)</span>
+      </a>
     </span>
   );
 }

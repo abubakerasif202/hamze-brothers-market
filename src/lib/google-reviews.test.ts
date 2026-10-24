@@ -66,3 +66,17 @@ describe("normalisePlacesResponse", () => {
     expect(out.ratingCount).toBe(0);
   });
 });
+
+describe("googleReviewsSnapshot", () => {
+  it("is dated and internally consistent", async () => {
+    const { googleReviewsSnapshot: s } = await import("@/content/google-reviews-snapshot");
+    expect(s.capturedOn).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+    expect(s.rating).toBeGreaterThanOrEqual(1);
+    expect(s.rating).toBeLessThanOrEqual(5);
+    expect(s.ratingCount).toBeGreaterThanOrEqual(s.reviews.length);
+    for (const r of s.reviews) {
+      expect(r.author.trim()).not.toBe("");
+      expect(r.text.trim()).not.toBe("");
+    }
+  });
+});
