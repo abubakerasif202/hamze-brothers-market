@@ -43,3 +43,7 @@ next-env.d.ts
 # allow the documented example env file
 !.env.example
 .gstack/
+
+# playwright
+/test-results/
+/playwright-report/
