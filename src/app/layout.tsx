@@ -10,6 +10,7 @@ import { FunProvider } from "@/components/fun/FunProvider";
 import { IntroOverlay } from "@/components/fun/IntroOverlay";
 import "./globals.css";
 import "./fun.css";
+import "./specials.css";
 
 // Runs before first paint: returning visitors and reduced-motion users never see the intro.
 const introGate = `try{if(sessionStorage.getItem("hb-intro-seen")||matchMedia("(prefers-reduced-motion: reduce)").matches)document.documentElement.dataset.intro="skip"}catch(e){}`;

@@ -1,0 +1,80 @@
+/*
+ * Weekly specials section. Visual direction borrowed from the shop's flyers:
+ * heavy green and red lettering, a green ribbon, drifting leaves. Everything
+ * moves with transform/opacity only and stops under prefers-reduced-motion.
+ */
+
+.specials-title {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: baseline;
+  column-gap: 0.28em;
+  font-size: clamp(2.6rem, 1.2rem + 7.4vw, 6rem);
+  font-weight: 800;
+  font-stretch: 78%;
+  line-height: 0.92;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+.specials-title-main {
+  color: var(--color-crate);
+  /* A cream edge and a deeper green shadow give the flyer's carved-sign look. */
+  -webkit-text-stroke: 0.025em var(--color-crate-deep);
+  text-shadow:
+    0.04em 0.05em 0 var(--color-leaf-bright),
+    0.08em 0.1em 0 rgb(16 47 40 / 0.18);
+}
+
+.specials-title-accent {
+  position: relative;
+  color: var(--color-pomegranate);
+  font-style: italic;
+  display: inline-block;
+  transform: rotate(-2deg);
+  text-shadow: 0.04em 0.05em 0 rgb(255 253 248 / 0.9);
+}
+
+.specials-title-accent::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 -0.08em 0;
+  height: 0.07em;
+  border-radius: 999px;
+  background: var(--color-pomegranate);
+  opacity: 0.55;
+}
+
+.specials-ribbon {
+  background: var(--color-crate);
+  clip-path: polygon(0 0, 100% 0, calc(100% - 0.9rem) 50%, 100% 100%, 0 100%, 0.9rem 50%);
+  padding-inline: 2rem;
+}
+
+.specials-leaf {
+  transform-origin: 50% 100%;
+  animation: specials-sway 9s ease-in-out infinite alternate;
+}
+
+@keyframes specials-sway {
+  from {
+    translate: 0 0;
+    rotate: -2.5deg;
+  }
+  to {
+    translate: 0 -4px;
+    rotate: 3deg;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .specials-leaf {
+    animation: none !important;
+  }
+  .special-card,
+  .special-card img {
+    transform: none !important;
+  }
+}

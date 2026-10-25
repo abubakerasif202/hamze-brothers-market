@@ -6,7 +6,8 @@ import { MapEmbed } from "@/components/MapEmbed";
 import { OpenStatus } from "@/components/OpenStatus";
 import { Photo } from "@/components/Photo";
 import { GoogleReviewsSection } from "@/components/GoogleReviews";
-import { SpecialsBoard } from "@/components/SpecialsBoard";
+import { SpecialsShowcase } from "@/components/specials/SpecialsShowcase";
+import { HarvestBoxes } from "@/components/shop/HarvestBoxes";
 import { business } from "@/content/business";
 import { categories } from "@/content/categories";
 import { defaultDescription, pageMetadata } from "@/lib/seo";
@@ -79,8 +80,8 @@ export default function HomePage() {
           <div className="relative mx-auto mb-10 w-full max-w-xl pl-5 sm:pl-9 lg:mb-6 lg:max-w-none">
             <div className="market-photo relative aspect-[4/5] overflow-hidden bg-cream-deep sm:aspect-[5/5] lg:aspect-[4/5]">
               <Photo
-                image="bloodOrange"
-                fallbackLabel="Fresh from the floor"
+                image="heroFruitPlatter"
+                fallbackLabel="Seasonal fruit platter"
                 sizes="(min-width: 1024px) 45vw, 92vw"
                 preload
               />
@@ -105,15 +106,15 @@ export default function HomePage() {
             </div>
             <div className="absolute top-5 right-5 flex size-24 rotate-6 flex-col items-center justify-center rounded-full bg-[var(--fruit-banana)] text-center text-crate shadow-sm sm:size-28">
               <span className="font-display text-base leading-tight font-semibold sm:text-lg">
-                Fresh from
+                Seasonal
                 <br />
-                our floor
+                fruit
               </span>
             </div>
             <p className="absolute right-0 -bottom-9 max-w-[45%] text-right text-xs leading-relaxed text-ink-soft">
-              A little look inside
+              Illustration: fruit platter.
               <br />
-              your local market.
+              Small photo: our store.
             </p>
           </div>
         </div>
@@ -280,23 +281,30 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Curated Seasonal Harvest Boxes */}
+      <section aria-labelledby="boxes-heading" className="border-t border-ink/10 bg-cream-deep/60 py-16 sm:py-24">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mb-10 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+            <div>
+              <p className="eyebrow mb-3 text-pomegranate">Signature Curated Collections</p>
+              <h2 id="boxes-heading" className="sign text-[clamp(2.5rem,6vw,4.5rem)] text-crate">
+                Seasonal Harvest Boxes
+              </h2>
+            </div>
+            <p className="max-w-md text-ink-soft">
+              Short on time? Add a family fruit and veg box, Levantine mezze crate, or pressed juice trio to your Click
+              &amp; Collect preview basket in one click. Demo prices only.
+            </p>
+          </div>
+          <HarvestBoxes />
+        </div>
+      </section>
+
       {/* Live Google rating and reviews */}
       <GoogleReviewsSection />
 
       {/* Specials */}
-      <section aria-labelledby="specials-heading" className="border-y border-ink/10 bg-paper/60">
-        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-20 lg:px-8">
-          <div className="mb-8 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-            <h2 id="specials-heading" className="sign text-[clamp(2.75rem,7vw,5rem)] text-crate">
-              This week&apos;s specials
-            </h2>
-            <Link href="/specials" className="link font-semibold text-crate">
-              How specials work
-            </Link>
-          </div>
-          <SpecialsBoard variant="compact" />
-        </div>
-      </section>
+      <SpecialsShowcase />
 
       {/* Visit summary */}
       <section aria-labelledby="visit-heading" className="on-crate bg-crate text-cream">

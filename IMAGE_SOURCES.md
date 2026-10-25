@@ -63,6 +63,12 @@ Free to use commercially under the [Unsplash License](https://unsplash.com/licen
 
 Original URL pattern: `https://images.unsplash.com/<photo ID>`. Photographer credit is not required by the licence but can be added from each photo's Unsplash page.
 
+## Illustrative hero image
+
+| File                                            | Source                                                                                                                                               |
+| ----------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `public/images/produce/hero-fruit-platter.jpeg` | AI-generated fruit platter supplied by the project owner (generator and licence terms to be confirmed by the owner); illustrative, not a shop photo. |
+
 ## Not used
 
 - The supplied "Fresh produce made easy" mockup contains AI-generated people and shop scenes, so it was used for layout direction only.

@@ -90,8 +90,9 @@ export function BasketContents({
               const product = demoProductById.get(id)!;
               return (
                 <li key={id} className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2 py-3">
-                  <div className="min-w-0 flex-1">
-                    <p className="truncate font-semibold">{product.name}</p>
+                  {/* min-w makes the stepper wrap under the name on narrow screens instead of squeezing it. */}
+                  <div className="min-w-[10rem] flex-1">
+                    <p className="font-semibold [overflow-wrap:anywhere]">{product.name}</p>
                     <p className="text-sm text-ink-soft tabular-nums">
                       {formatCents(Math.round(product.demoPriceCents * qty))} <span className="text-xs">(demo)</span>
                     </p>

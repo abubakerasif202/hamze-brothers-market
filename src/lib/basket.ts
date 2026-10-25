@@ -108,3 +108,27 @@ export function formatQty(qty: number, product: Pick<DemoProduct, "unit" | "unit
 export function formatCents(cents: number): string {
   return new Intl.NumberFormat("en-AU", { style: "currency", currency: "AUD" }).format(cents / 100);
 }
+
+/** Add every line of a bundle on top of the current basket, respecting each product's step and limit. */
+export function addBundle(
+  state: BasketState,
+  bundle: readonly { productId: string; qty: number }[],
+  catalogue: Catalogue,
+): BasketState {
+  return bundle.reduce((acc, line) => {
+    const product = catalogue.get(line.productId);
+    if (!product) return acc;
+    return setLine(acc, line.productId, (acc.lines[line.productId] ?? 0) + line.qty, catalogue);
+  }, state);
+}
+
+/** Sum of the demo prices for a bundle, in cents. */
+export function bundleTotalCents(
+  bundle: readonly { productId: string; qty: number }[],
+  catalogue: ReadonlyMap<string, Pick<DemoProduct, "demoPriceCents">>,
+): number {
+  return bundle.reduce(
+    (sum, line) => sum + Math.round((catalogue.get(line.productId)?.demoPriceCents ?? 0) * line.qty),
+    0,
+  );
+}

@@ -6,6 +6,8 @@
  *   remove overlaid dates/prices).
  * - kind "stock": Unsplash License photography, used to illustrate produce
  *   types. Replace with the shop's own photography when supplied.
+ * - kind "illustration": AI-generated imagery, illustrative rather than a
+ *   photograph of the shop.
  * Full provenance list: IMAGE_SOURCES.md
  */
 
@@ -14,7 +16,7 @@ export interface SiteImage {
   alt: string;
   width: number;
   height: number;
-  kind: "store" | "stock" | "brand";
+  kind: "store" | "stock" | "brand" | "illustration";
 }
 
 const stock = (file: string, alt: string, width: number, height: number): SiteImage => ({
@@ -61,6 +63,13 @@ export const images = {
     width: 1320,
     height: 780,
     kind: "store",
+  },
+  heroFruitPlatter: {
+    src: "/images/produce/hero-fruit-platter.jpeg",
+    alt: "A colourful platter of seasonal fruit, including berries, grapes, citrus and watermelon",
+    width: 1312,
+    height: 1200,
+    kind: "illustration",
   },
 
   fruitAssortment: stock(

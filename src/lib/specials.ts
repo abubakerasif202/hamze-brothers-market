@@ -18,3 +18,16 @@ export function formatShortDate(iso: string): string {
     timeZone: "UTC",
   }).format(new Date(Date.UTC(y, m - 1, d)));
 }
+
+/** "$2.99/kg" -> { amount: "$2.99", unit: "kg" }. Anything else is shown whole. */
+export function splitPrice(price: string): { amount: string; unit?: string } {
+  const match = /^(.+?)\s*\/\s*(\S.*)$/.exec(price.trim());
+  return match ? { amount: match[1], unit: match[2] } : { amount: price.trim() };
+}
+
+/** Human date range: "Sat, 7 Nov to Sun, 8 Nov", or "Sat, 7 Nov only". */
+export function formatOfferDates(startDate: string, endDate: string): string {
+  return startDate === endDate
+    ? `${formatShortDate(startDate)} only`
+    : `${formatShortDate(startDate)} to ${formatShortDate(endDate)}`;
+}

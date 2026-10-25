@@ -11,6 +11,7 @@ import { ShopContext } from "./actions";
 import { BasketContents } from "./BasketContents";
 import { CollectPreview } from "./CollectPreview";
 import { Dialog } from "./Dialog";
+import { HarvestBoxes } from "./HarvestBoxes";
 import { ProductCard } from "./ProductCard";
 import { ProductDetails } from "./ProductDetails";
 
@@ -87,7 +88,20 @@ export function ShopPreview() {
 
   return (
     <ShopContext.Provider value={ctx}>
-      <div className="mx-auto grid max-w-7xl gap-10 px-4 pt-10 pb-32 sm:px-6 md:py-14 lg:grid-cols-[1fr_22rem] lg:px-8">
+      <div className="mx-auto max-w-7xl px-4 pt-10 sm:px-6 lg:px-8">
+        <details className="group rounded-[var(--radius-tile)] border border-crate/15 bg-paper p-5 shadow-xs">
+          <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-display text-xl font-bold text-crate">
+            <span>🧺 Quick-Fill: Pre-Curated Seasonal Harvest Boxes (3 Bundles)</span>
+            <span className="rounded-full bg-citrus/25 px-3 py-1 font-sans text-xs font-semibold text-ink group-open:bg-crate group-open:text-cream">
+              Toggle Bundles
+            </span>
+          </summary>
+          <div className="mt-5 border-t border-ink/10 pt-5">
+            <HarvestBoxes compact />
+          </div>
+        </details>
+      </div>
+      <div className="mx-auto grid max-w-7xl gap-10 px-4 pt-8 pb-32 sm:px-6 md:py-10 lg:grid-cols-[1fr_22rem] lg:px-8">
         <div className="min-w-0">
           <h2 className="sr-only">Demo catalogue</h2>
           <div className="flex flex-col gap-4">

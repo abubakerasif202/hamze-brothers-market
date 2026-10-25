@@ -4,9 +4,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { business } from "@/content/business";
+import { business, fullAddress } from "@/content/business";
 import { images } from "@/content/images";
 import { navItems } from "@/lib/site";
+import { formatTime } from "@/lib/time";
 import { useBasket } from "@/lib/basket-store";
 import { summarise } from "@/lib/basket";
 import { demoProductById } from "@/content/demo/products";
@@ -73,6 +74,22 @@ export function SiteHeader() {
 
   return (
     <>
+      {/* Outside the sticky header so the mobile menu's fixed offset stays aligned with the header height. */}
+      <div className="border-b border-white/10 bg-crate-deep text-xs text-cream/90">
+        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-2 px-4 py-1.5 sm:px-6 lg:px-8">
+          <p className="font-medium">
+            <span className="font-semibold text-citrus">
+              Open 7 days · {formatTime(business.hours.mon.open)}–{formatTime(business.hours.mon.close)}
+            </span>
+            <span className="hidden text-cream/75 sm:inline"> · {fullAddress}</span>
+          </p>
+          <p className="ml-auto flex items-center gap-3">
+            <span className="font-semibold text-citrus" dir="rtl" lang="ar">
+              {business.arabicName}
+            </span>
+          </p>
+        </div>
+      </div>
       <header className="sticky top-0 z-40 border-b border-crate/15 bg-cream/95 backdrop-blur supports-[backdrop-filter]:bg-cream/90">
         <a
           href="#main"
@@ -80,14 +97,14 @@ export function SiteHeader() {
         >
           Skip to content
         </a>
-        <div className="mx-auto flex h-[4.5rem] max-w-7xl items-center gap-3 px-4 sm:px-6 lg:h-20 lg:px-8">
-          <Link href="/" className="group flex min-w-0 items-center gap-2.5">
+        <div className="mx-auto flex h-[4.5rem] max-w-7xl items-center gap-2 px-3 min-[360px]:gap-3 min-[360px]:px-4 sm:px-6 lg:h-20 lg:px-8">
+          <Link href="/" className="group flex min-w-0 items-center gap-2 min-[360px]:gap-2.5">
             <Image
               src={images.logoMark.src}
               alt=""
               width={images.logoMark.width}
               height={images.logoMark.height}
-              className="h-10 w-auto shrink-0 sm:h-11 lg:h-12"
+              className="h-9 w-auto shrink-0 min-[360px]:h-10 sm:h-11 lg:h-12"
               loading="eager"
               sizes="56px"
             />
@@ -95,7 +112,7 @@ export function SiteHeader() {
               <span className="sign truncate text-[1.15rem] text-crate sm:text-[1.35rem] lg:text-[1.5rem]">
                 Hamze Brothers
               </span>
-              <span className="mt-1 truncate text-[0.65rem] font-medium tracking-[0.08em] text-ink-soft sm:text-[0.7rem]">
+              <span className="mt-1 truncate text-[0.65rem] font-medium tracking-[0.08em] text-ink-soft max-[359px]:hidden sm:text-[0.7rem]">
                 FRUIT MARKET · GUILDFORD
               </span>
             </span>

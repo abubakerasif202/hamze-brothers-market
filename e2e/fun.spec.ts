@@ -67,9 +67,23 @@ test.describe("add to basket", () => {
 
   test("updates the basket and fires the flying fruit and confetti", async ({ page }) => {
     await page.goto("/shop");
+    // The effects are short-lived (confetti is removed after 900ms), so record that they were
+    // added rather than racing the polling loop against their removal on a busy machine.
+    await page.evaluate(() => {
+      const seen = { confetti: 0, fruit: 0 };
+      (window as unknown as { __fx: typeof seen }).__fx = seen;
+      new MutationObserver((records) => {
+        for (const node of records.flatMap((r) => [...r.addedNodes])) {
+          if (!(node instanceof HTMLElement)) continue;
+          if (node.classList.contains("confetti-bit")) seen.confetti++;
+          if (node.classList.contains("fly-fruit")) seen.fruit++;
+        }
+      }).observe(document.body, { childList: true, subtree: true });
+    });
     await page.getByRole("button", { name: /^Add/ }).first().click();
-    await expect(page.locator(".confetti-bit").first()).toBeAttached();
-    await expect(page.locator(".fly-fruit")).toBeAttached();
+    const fx = () => page.evaluate(() => (window as unknown as { __fx: { confetti: number; fruit: number } }).__fx);
+    await expect.poll(async () => (await fx()).confetti).toBeGreaterThan(0);
+    await expect.poll(async () => (await fx()).fruit).toBeGreaterThan(0);
     await expect(page.locator("[data-cart-icon]").first()).toContainText("1");
   });
 

@@ -23,6 +23,7 @@
  */
 
 import type { CategoryId } from "./categories";
+import type { ImageKey } from "./images";
 
 export interface Special {
   id: string;
@@ -32,6 +33,8 @@ export interface Special {
   startDate: string;
   endDate: string;
   category?: CategoryId;
+  /** Optional product photo from images.ts; falls back to the category photo. */
+  image?: ImageKey;
   /** Optional note such as "Saturday only" or "While stocks last". */
   conditions?: string;
 }

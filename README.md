@@ -19,7 +19,7 @@ Built by [AB Web Studio](https://abwebstudio.com.au) with Next.js 16 (App Router
 
 ## Local development
 
-Requires Node.js 20.9+ and pnpm 10 (`corepack enable`).
+Requires Node.js 20.9+ and pnpm 10 (`corepack enable`). If Vitest fails with `#module-evaluator`, move the folder to a shorter path (seen only under a very long temp path on Windows).
 
 ```bash
 pnpm install
@@ -29,10 +29,11 @@ pnpm dev            # http://localhost:3000
 Quality checks:
 
 ```bash
-pnpm typecheck      # tsc --noEmit
+pnpm typecheck      # next typegen (route types) + tsc --noEmit
 pnpm lint           # ESLint (next/core-web-vitals + TypeScript)
 pnpm test           # Vitest unit tests (basket validation, hours, specials, collection slots)
 pnpm build          # production build
+pnpm test:e2e       # Playwright (first run: pnpm exec playwright install chromium)
 pnpm check          # all of the above
 pnpm format         # Prettier
 ```
@@ -107,6 +108,12 @@ export const specials: Special[] = [
 ];
 ```
 
+### Weekly specials (home page)
+
+The home page section reads `src/content/specials.ts` only. Offers appear between their inclusive `startDate` and `endDate` in Sydney time and disappear automatically afterwards. Each entry can set `image` (a key from `src/content/images.ts`; otherwise the category photo is used), `detail` and `conditions`. With no active offers the section shows an empty state linking to Instagram. No flyer or sample prices are published.
+
+To review the full animated design with clearly labelled sample content, run `pnpm dev` and open `/dev/specials-preview` (also `?state=mixed`, `?state=empty`, `?today=2026-11-10`). That route returns 404 in production builds, is `noindex`, and its data lives in `src/content/specials-sample.ts`. Playwright starts `next dev` on port 3124 for the tests that use it.
+
 ## Demonstration-only features
 
 The **Online Shopping Preview** (`/shop`) exists to show the owners how online shopping and click-and-collect could work. It is labelled throughout:
@@ -114,6 +121,7 @@ The **Online Shopping Preview** (`/shop`) exists to show the owners how online s
 - Products, sizes and prices are samples from `src/content/demo/products.ts`. Every price is marked **"Demo price"** and is **not** a Hamze Brothers price.
 - The basket is stored only in the visitor's browser (`localStorage` key `hamze-demo-basket:v1`). Invalid or tampered data is discarded safely.
 - The click-and-collect flow lets visitors choose an example collection window. The final step states that **nothing was ordered, sent or paid**. There's no checkout, no payment, no order confirmation and no personal-data collection.
+- **Seasonal Harvest Boxes** (`HarvestBoxes`, data in `src/content/demo/boxes.ts`) add example bundles built only from demo catalogue items. Totals are the plain sum of demo prices, with no discount, and the contents are examples the shop has not confirmed.
 - No contact form exists, because there's no verified destination for messages.
 
 ### Before enabling real commerce
@@ -130,6 +138,8 @@ The **Online Shopping Preview** (`/shop`) exists to show the owners how online s
 
 ## Information to confirm with the owners
 
+- **Hero image:** `hero-fruit-platter.jpeg` is AI-generated and shown as an illustration (captioned on the page). Confirm the generator's terms allow commercial use, or replace it with a real store photo.
+- **Google rating:** the site no longer shows a hardcoded rating; the snapshot in `google-reviews-snapshot.ts` (5.0, 8 ratings) is the only source and needs re-checking.
 - **Opening hours:** 8:00am–9:30pm, 7 days, matching both the Instagram bio and the Google Maps listing (checked 25 Oct 2026). Keep Google, Instagram and `business.ts` in sync when hours change.
 - **Parking:** "parking available at the back of Guildford Plaza" comes from an Instagram post. Please confirm.
 - Whether to switch on the live Google reviews (needs a Google Cloud key with billing, see above).
