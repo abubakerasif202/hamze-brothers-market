@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import { categoryById } from "@/content/categories";
 import type { DemoProduct } from "@/content/demo/products";
 import { formatCents } from "@/lib/basket";
+import { celebrateAdd } from "../fun/celebrate";
 import { Icon } from "../Icon";
 import { Photo } from "../Photo";
 import { addProduct, stepProduct, useShop } from "./actions";
@@ -84,7 +85,8 @@ export function ProductCard({ product, qty }: { product: DemoProduct; qty: numbe
               ref={addRef}
               type="button"
               className="btn btn-primary !min-h-11 !py-2"
-              onClick={() => {
+              onClick={(e) => {
+                celebrateAdd(e.currentTarget);
                 focusNext.current = "plus";
                 announce(addProduct(product.id));
               }}

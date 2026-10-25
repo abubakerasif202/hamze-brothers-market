@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import { categoryById } from "@/content/categories";
 import type { DemoProduct } from "@/content/demo/products";
+import { celebrateAdd } from "../fun/celebrate";
 import { Icon } from "../Icon";
 import { Photo } from "../Photo";
 import { addProduct, stepProduct, useShop } from "./actions";
@@ -52,7 +53,8 @@ export function ProductDetails({ product, qty }: { product: DemoProduct; qty: nu
               ref={addRef}
               type="button"
               className="btn btn-primary"
-              onClick={() => {
+              onClick={(e) => {
+                celebrateAdd(e.currentTarget);
                 announce(addProduct(product.id));
                 requestAnimationFrame(() => plusRef.current?.focus());
               }}

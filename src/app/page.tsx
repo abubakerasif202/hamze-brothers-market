@@ -1,5 +1,6 @@
-import Image from "next/image";
 import Link from "next/link";
+import { Banana, OrangeBros, PeekingFruit, Strawberry, Watermelon } from "@/components/fun/Fruit";
+import { Magnetic, Reveal, Tilt } from "@/components/fun/Effects";
 import { Icon } from "@/components/Icon";
 import { MapEmbed } from "@/components/MapEmbed";
 import { OpenStatus } from "@/components/OpenStatus";
@@ -8,7 +9,6 @@ import { GoogleReviewsSection } from "@/components/GoogleReviews";
 import { SpecialsBoard } from "@/components/SpecialsBoard";
 import { business } from "@/content/business";
 import { categories } from "@/content/categories";
-import { images } from "@/content/images";
 import { defaultDescription, pageMetadata } from "@/lib/seo";
 import { formatTime } from "@/lib/time";
 
@@ -38,8 +38,8 @@ export default function HomePage() {
             </p>
             <h1 id="hero-heading" className="sign hero-title mt-6 text-crate">
               <span className="sr-only">{business.name}: </span>
-              <span className="rise block">Fresh.</span>
-              <span className="rise block [animation-delay:120ms]">Local.</span>
+              <span className="rise block text-[var(--fruit-strawberry)]">Fresh.</span>
+              <span className="rise block text-[var(--fruit-orange)] [animation-delay:120ms]">Local.</span>
               <em className="rise block text-crate-soft [animation-delay:240ms]">Family.</em>
             </h1>
             <p className="mt-7 max-w-md text-lg leading-relaxed text-ink-soft">
@@ -47,19 +47,24 @@ export default function HomePage() {
               table. Welcome to your family market at Guildford Plaza.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-              <a
-                href={business.links.googleDirections}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn-primary"
-              >
-                <Icon name="directions" />
-                Get directions
-                <span className="sr-only">(opens Google Maps in a new tab)</span>
-              </a>
-              <Link href="/produce" className="btn btn-outline text-crate">
-                Explore the market <span aria-hidden="true">↗</span>
-              </Link>
+              <Magnetic>
+                <Link href="/shop" className="btn btn-berry text-lg">
+                  <Icon name="basket" />
+                  Shop online (preview)
+                </Link>
+              </Magnetic>
+              <Magnetic>
+                <a
+                  href={business.links.googleDirections}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-primary text-lg"
+                >
+                  <Icon name="directions" />
+                  Visit our store
+                  <span className="sr-only">(opens Google Maps in a new tab)</span>
+                </a>
+              </Magnetic>
             </div>
             <div className="market-detail mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-ink-soft">
               <span className="inline-flex items-center gap-2">
@@ -85,7 +90,13 @@ export default function HomePage() {
                 <Photo image="inStoreDisplay" fallbackLabel="In store" sizes="(min-width: 1024px) 22vw, 45vw" />
               </div>
             </div>
-            <div className="absolute top-5 right-5 flex size-24 rotate-6 flex-col items-center justify-center rounded-full bg-citrus text-center text-crate shadow-sm sm:size-28">
+            <div className="fruit-float -top-10 -left-2 hidden sm:block" style={{ ["--w" as string]: "6.5rem", ["--depth" as string]: "-22", ["--rot" as string]: "-8deg" }} aria-hidden="false">
+              <Banana />
+            </div>
+            <div className="fruit-float -right-3 bottom-24 hidden md:block" style={{ ["--w" as string]: "6rem", ["--depth" as string]: "26", ["--delay" as string]: "1.2s" }}>
+              <Strawberry />
+            </div>
+            <div className="absolute top-5 right-5 flex size-24 rotate-6 flex-col items-center justify-center rounded-full bg-[var(--fruit-banana)] text-center text-crate shadow-sm sm:size-28">
               <span className="font-display text-base leading-tight font-semibold sm:text-lg">
                 Fresh from
                 <br />
@@ -120,10 +131,9 @@ export default function HomePage() {
           </div>
           <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:auto-rows-[15rem] lg:grid-cols-6">
             {categories.map((cat, i) => (
-              <li
-                key={cat.id}
-                className={`group relative overflow-hidden rounded-[var(--radius-tile)] ${tileLayout[i]}`}
-              >
+              <li key={cat.id} className={`${tileLayout[i]} cat-tile-${i}`}>
+                <Reveal delay={i * 70} className="size-full">
+                <Tilt className="group cat-tile-ring relative size-full overflow-hidden rounded-[var(--radius-tile)]">
                 <Link href={`/produce#${cat.id}`} className="absolute inset-0 z-10 rounded-[var(--radius-tile)]">
                   <span className="sr-only">
                     {cat.name}: {cat.strapline}
@@ -152,20 +162,27 @@ export default function HomePage() {
                   </span>
                   <p className="mt-3 max-w-sm text-[0.95rem] leading-snug text-cream/90">{cat.strapline}</p>
                 </div>
+                </Tilt>
+                </Reveal>
               </li>
             ))}
           </ul>
         </div>
       </section>
 
+      <div className="relative bg-crate" aria-hidden="true">
+        <PeekingFruit kind="orange" />
+      </div>
+      <OrangeBros />
+
       {/* Juices */}
-      <section aria-labelledby="juice-heading" className="bg-cream-deep">
+      <section aria-labelledby="juice-heading" className="band-sunny relative">
         <div className="mx-auto grid max-w-7xl gap-10 px-4 py-16 sm:px-6 md:grid-cols-2 md:items-center md:py-24 lg:px-8">
           <div className="relative order-last aspect-[4/5] overflow-hidden rounded-[var(--radius-tile)] md:order-first">
             <Photo image="orangeJuiceBottle" fallbackLabel="Fresh juice" sizes="(min-width: 768px) 45vw, 92vw" />
           </div>
           <div>
-            <p className="eyebrow mb-4 text-crate-soft">From fruit to bottle</p>
+            <p className="sticker mb-5 bg-paper text-crate">From fruit to bottle</p>
             <h2 id="juice-heading" className="sign text-[clamp(2.75rem,7vw,5.25rem)] text-crate">
               Juice, pressed in front of you
             </h2>
@@ -175,7 +192,7 @@ export default function HomePage() {
             </p>
             <ul className="mt-6 flex flex-wrap gap-2" aria-label="Juices the shop has featured">
               {juiceFlavours.map((f) => (
-                <li key={f} className="ticket bg-paper text-base text-crate">
+                <li key={f} className="ticket border-2 border-ink bg-paper text-base text-crate">
                   {f}
                 </li>
               ))}
@@ -332,31 +349,26 @@ export default function HomePage() {
       </section>
 
       {/* Click & collect pitch */}
-      <section aria-labelledby="preview-heading" className="bg-cream-deep">
+      <section aria-labelledby="preview-heading" className="band-berry relative overflow-hidden">
         <div className="mx-auto grid max-w-7xl gap-10 px-4 py-16 sm:px-6 md:grid-cols-[1fr_auto] md:items-center md:py-24 lg:px-8">
           <div>
-            <p className="eyebrow mb-4 text-crate-soft">A taste of what&apos;s possible · Demo</p>
-            <h2 id="preview-heading" className="sign max-w-3xl text-[clamp(2.75rem,7vw,5.25rem)] text-crate">
+            <p className="sticker mb-5 bg-[var(--fruit-banana)] text-ink">A taste of what&apos;s possible · Demo</p>
+            <h2 id="preview-heading" className="sign max-w-3xl text-[clamp(2.75rem,7vw,5.25rem)]">
               Picture ordering ahead
             </h2>
-            <p className="mt-5 max-w-2xl text-lg text-ink-soft">
+            <p className="mt-5 max-w-2xl text-lg text-cream/90">
               This is a working preview of how click-and-collect could look at Hamze Brothers. Browse the market, fill a
               basket and pick a collection time. It&apos;s a demonstration only: nothing is ordered, paid for or sent to
               the shop.
             </p>
-            <Link href="/shop" className="btn btn-primary mt-7 text-lg">
+            <Link href="/shop" className="btn btn-citrus mt-7 text-lg">
               <Icon name="basket" />
               Try the shopping preview
             </Link>
           </div>
-          <Image
-            src={images.logoFull.src}
-            alt={images.logoFull.alt}
-            width={images.logoFull.width}
-            height={images.logoFull.height}
-            sizes="(min-width: 768px) 260px, 200px"
-            className="mx-auto h-auto w-[200px] md:w-[260px]"
-          />
+          <div className="mx-auto w-[220px] md:w-[300px]">
+            <Watermelon />
+          </div>
         </div>
       </section>
     </>

@@ -128,6 +128,7 @@ export function SiteHeader() {
           <div className="ml-auto flex items-center gap-1 sm:gap-2 xl:ml-2">
             <Link
               href="/shop#basket"
+              data-cart-icon
               className="relative inline-flex size-11 items-center justify-center rounded-full text-crate hover:bg-ink/5"
               aria-label={itemCount > 0 ? `Demo basket, ${itemCount} items` : "Demo basket, empty"}
             >
