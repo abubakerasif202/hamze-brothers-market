@@ -13,6 +13,9 @@ const eslintConfig = defineConfig([
     "build/**",
     "next-env.d.ts",
     "test-results/**",
+    // Local AI-tooling scratch space, not project code.
+    ".remember/**",
+    ".gstack/**",
     "playwright-report/**",
   ]),
 ]);

@@ -37,9 +37,16 @@ test.describe("fruit characters", () => {
   test("Mr Banana dances on the fifth click", async ({ page }) => {
     await page.goto("/");
     const banana = page.getByRole("button", { name: /Mr Banana/ });
-    for (let i = 0; i < 4; i++) await banana.click({ force: true });
+    // Banana bobs forever, so Playwright's "stable" wait never settles. Click where he
+    // currently is with a real mouse event instead of forcing the click.
+    const clickBanana = async () => {
+      const box = await banana.boundingBox();
+      if (!box) throw new Error("Mr Banana is not rendered");
+      await page.mouse.click(box.x + box.width / 2, box.y + box.height / 2);
+    };
+    for (let i = 0; i < 4; i++) await clickBanana();
     await expect(banana).not.toHaveClass(/is-dancing/);
-    await banana.click({ force: true });
+    await clickBanana();
     await expect(banana).toHaveClass(/is-dancing/);
   });
 
@@ -84,4 +91,25 @@ test("layout has no horizontal overflow on a phone", async ({ browser }) => {
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - innerWidth);
   expect(overflow).toBeLessThanOrEqual(0);
   await context.close();
+});
+
+test.describe("site health", () => {
+  const routes = ["/", "/our-market", "/produce", "/specials", "/visit", "/shop"];
+
+  for (const route of routes) {
+    test(`${route} loads without console errors or failed requests`, async ({ context, page }) => {
+      await context.addInitScript(() => sessionStorage.setItem("hb-intro-seen", "1"));
+      const problems: string[] = [];
+      page.on("console", (m) => m.type() === "error" && problems.push(`console: ${m.text()}`));
+      page.on("pageerror", (e) => problems.push(`pageerror: ${e.message}`));
+      page.on("response", (r) => {
+        // Third-party embeds (maps, reviews) load lazily and are out of scope here.
+        if (r.url().startsWith("http://localhost") && r.status() >= 400) problems.push(`${r.status()} ${r.url()}`);
+      });
+      const response = await page.goto(route);
+      expect(response?.status()).toBe(200);
+      await page.waitForLoadState("networkidle");
+      expect(problems).toEqual([]);
+    });
+  }
 });
