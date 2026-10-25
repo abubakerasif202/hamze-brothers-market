@@ -67,7 +67,7 @@ Original URL pattern: `https://images.unsplash.com/<photo ID>`. Photographer cre
 
 | File                                            | Source                                                                                                                                               |
 | ----------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `public/images/produce/hero-fruit-platter.jpeg` | AI-generated fruit platter supplied by the project owner (generator and licence terms to be confirmed by the owner); illustrative, not a shop photo. |
+| `public/images/produce/hero-fruit-platter.jpeg` | AI-generated fruit platter supplied by the project owner, who confirmed on 25 Oct 2026 that they hold a licence for its use (licence document not kept in this repository); illustrative, not a shop photo. |
 
 ## Not used
 
