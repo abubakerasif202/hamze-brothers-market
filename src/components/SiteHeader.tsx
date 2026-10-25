@@ -33,6 +33,12 @@ export function SiteHeader() {
 
   useEffect(() => {
     if (!open) return;
+    const desktop = window.matchMedia("(min-width: 1280px)");
+    const closeOnDesktop = () => {
+      if (desktop.matches) setOpen(false);
+    };
+    desktop.addEventListener("change", closeOnDesktop);
+    closeOnDesktop();
     const panel = panelRef.current;
     panel?.querySelector<HTMLElement>("a, button")?.focus();
     const onKey = (event: KeyboardEvent) => {
@@ -59,6 +65,7 @@ export function SiteHeader() {
     document.addEventListener("keydown", onKey);
     document.body.style.overflow = "hidden";
     return () => {
+      desktop.removeEventListener("change", closeOnDesktop);
       document.removeEventListener("keydown", onKey);
       document.body.style.overflow = "";
     };
@@ -66,31 +73,35 @@ export function SiteHeader() {
 
   return (
     <>
-      <header className="sticky top-0 z-40 border-b border-ink/10 bg-cream/95 backdrop-blur supports-[backdrop-filter]:bg-cream/85">
+      <header className="sticky top-0 z-40 border-b border-crate/15 bg-cream/95 backdrop-blur supports-[backdrop-filter]:bg-cream/90">
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-4 focus:z-50 focus:rounded-full focus:bg-crate focus:px-4 focus:py-2 focus:text-cream"
         >
           Skip to content
         </a>
-        <div className="mx-auto flex h-[4.5rem] max-w-7xl items-center gap-4 px-4 sm:px-6 lg:h-20 lg:px-8">
-          <Link href="/" className="group flex min-w-0 items-center gap-3">
+        <div className="mx-auto flex h-[4.5rem] max-w-7xl items-center gap-3 px-4 sm:px-6 lg:h-20 lg:px-8">
+          <Link href="/" className="group flex min-w-0 items-center gap-2.5">
             <Image
               src={images.logoMark.src}
               alt=""
               width={images.logoMark.width}
               height={images.logoMark.height}
-              className="h-11 w-auto shrink-0 lg:h-12"
+              className="h-10 w-auto shrink-0 sm:h-11 lg:h-12"
               loading="eager"
               sizes="56px"
             />
             <span className="flex min-w-0 flex-col leading-none">
-              <span className="sign truncate text-[1.35rem] text-crate lg:text-[1.6rem]">Hamze Brothers</span>
-              <span className="mt-0.5 truncate text-[0.8rem] font-semibold text-ink-soft">Fruit Market, Guildford</span>
+              <span className="sign truncate text-[1.15rem] text-crate sm:text-[1.35rem] lg:text-[1.5rem]">
+                Hamze Brothers
+              </span>
+              <span className="mt-1 truncate text-[0.65rem] font-medium tracking-[0.08em] text-ink-soft sm:text-[0.7rem]">
+                FRUIT MARKET · GUILDFORD
+              </span>
             </span>
           </Link>
 
-          <nav aria-label="Main" className="ml-auto hidden lg:block">
+          <nav aria-label="Main" className="ml-auto hidden xl:block">
             <ul className="flex items-center gap-1">
               {navItems.map((item) => {
                 const active = isActive(pathname, item.href);
@@ -99,16 +110,13 @@ export function SiteHeader() {
                     <Link
                       href={item.href}
                       aria-current={active ? "page" : undefined}
-                      className={`relative rounded-full px-3.5 py-2 text-[0.95rem] font-semibold transition-colors hover:bg-ink/5 ${
+                      className={`relative rounded px-3 py-2 text-sm font-medium transition-colors hover:bg-ink/5 ${
                         active ? "text-crate" : "text-ink-soft"
                       }`}
                     >
                       {item.label}
                       {active && (
-                        <span
-                          className="absolute inset-x-3.5 -bottom-0.5 h-[3px] rounded-full bg-pomegranate"
-                          aria-hidden="true"
-                        />
+                        <span className="absolute inset-x-3 -bottom-0.5 h-[2px] bg-crate" aria-hidden="true" />
                       )}
                     </Link>
                   </li>
@@ -117,7 +125,7 @@ export function SiteHeader() {
             </ul>
           </nav>
 
-          <div className="ml-auto flex items-center gap-2 lg:ml-2">
+          <div className="ml-auto flex items-center gap-1 sm:gap-2 xl:ml-2">
             <Link
               href="/shop#basket"
               className="relative inline-flex size-11 items-center justify-center rounded-full text-crate hover:bg-ink/5"
@@ -125,7 +133,7 @@ export function SiteHeader() {
             >
               <Icon name="basket" width="1.4em" height="1.4em" />
               {itemCount > 0 && (
-                <span className="absolute -top-0.5 -right-0.5 grid min-w-5 place-items-center rounded-full bg-pomegranate px-1 text-[0.7rem] leading-5 font-bold text-white">
+                <span className="absolute -top-0.5 -right-0.5 grid min-w-5 place-items-center rounded-full bg-crate px-1 text-[0.7rem] leading-5 font-bold text-cream">
                   {itemCount > 99 ? "99+" : itemCount}
                 </span>
               )}
@@ -143,7 +151,7 @@ export function SiteHeader() {
             <button
               ref={toggleRef}
               type="button"
-              className="inline-flex size-11 items-center justify-center rounded-full text-crate hover:bg-ink/5 lg:hidden"
+              className="inline-flex size-11 items-center justify-center rounded-full text-crate hover:bg-ink/5 xl:hidden"
               aria-expanded={open}
               aria-controls="mobile-menu"
               onClick={() => setOpen((v) => !v)}
@@ -160,7 +168,7 @@ export function SiteHeader() {
         id="mobile-menu"
         ref={panelRef}
         hidden={!open}
-        className="fixed inset-x-0 top-[4.5rem] bottom-0 z-[35] overflow-y-auto bg-crate text-cream lg:hidden"
+        className="fixed inset-x-0 top-[4.5rem] bottom-0 z-[35] overflow-y-auto bg-crate text-cream lg:top-20 xl:hidden"
       >
         <nav aria-label="Mobile" className="mx-auto flex min-h-full max-w-xl flex-col px-6 pt-6 pb-12">
           <ul>

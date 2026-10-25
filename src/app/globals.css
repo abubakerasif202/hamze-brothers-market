@@ -2,28 +2,28 @@
 
 /*
  * Hamze Brothers design tokens
- * Palette drawn from the logo: pomegranate, fig, citrus and grape-leaf,
- * set against a deep crate green and the butter-cream of the logo paper.
+ * Forest, warm ivory and citrus keep the produce photography at centre stage.
+ * Fruit accents remain available for meaningful category and status treatments.
  */
 @theme {
-  --color-crate: #0e3b2a;
-  --color-crate-deep: #0a2c1f;
-  --color-crate-soft: #164d37;
-  --color-cream: #f6efd9;
-  --color-cream-deep: #ece1c2;
-  --color-paper: #fffaf0;
-  --color-ink: #17271e;
-  --color-ink-soft: #3f5146;
-  --color-pomegranate: #c8202a;
-  --color-fig: #6a2c91;
-  --color-citrus: #f39a1e;
-  --color-leaf: #4f9a25;
-  --color-leaf-bright: #8cc63f;
+  --color-crate: #173f35;
+  --color-crate-deep: #102f28;
+  --color-crate-soft: #24584a;
+  --color-cream: #f8f5ec;
+  --color-cream-deep: #eee9dc;
+  --color-paper: #fffdf8;
+  --color-ink: #182f29;
+  --color-ink-soft: #52635b;
+  --color-pomegranate: #a83e36;
+  --color-fig: #685164;
+  --color-citrus: #e7a34a;
+  --color-leaf: #396345;
+  --color-leaf-bright: #bacda1;
 
   --font-display: var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
   --font-sans: var(--font-figtree), ui-sans-serif, system-ui, sans-serif;
 
-  --radius-tile: 1.5rem;
+  --radius-tile: 0.75rem;
 }
 
 @layer base {
@@ -45,8 +45,8 @@
   h2,
   h3 {
     font-family: var(--font-display);
-    line-height: 0.95;
-    letter-spacing: -0.02em;
+    line-height: 1.04;
+    letter-spacing: -0.045em;
     text-wrap: balance;
   }
 
@@ -72,38 +72,25 @@
 }
 
 @layer components {
-  /* Condensed display treatment used for the big market-sign headings. */
+  /* A consistent editorial voice across headings, from the market to the shop. */
   .sign {
     font-family: var(--font-display);
-    font-stretch: 75%;
-    font-weight: 800;
-    line-height: 0.88;
-    letter-spacing: -0.015em;
+    font-stretch: 100%;
+    font-weight: 600;
+    line-height: 1.02;
+    letter-spacing: -0.045em;
   }
 
-  /*
-   * The price ticket — the site's signature shape, borrowed from the
-   * notched price cards on the shop floor.
-   */
+  /* Quiet labels let market photography supply the colour. */
   .ticket {
-    --notch: 0.55rem;
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
-    padding: 0.35rem 0.85rem 0.4rem;
-    font-family: var(--font-display);
-    font-weight: 700;
-    line-height: 1.1;
-    clip-path: polygon(
-      var(--notch) 0,
-      calc(100% - var(--notch)) 0,
-      100% var(--notch),
-      100% calc(100% - var(--notch)),
-      calc(100% - var(--notch)) 100%,
-      var(--notch) 100%,
-      0 calc(100% - var(--notch)),
-      0 var(--notch)
-    );
+    padding: 0.5rem 0.85rem;
+    border-radius: 0.25rem;
+    font-family: var(--font-sans);
+    font-weight: 600;
+    line-height: 1.25;
   }
 
   .btn {
@@ -113,14 +100,15 @@
     gap: 0.6rem;
     min-height: 3rem;
     padding: 0.75rem 1.4rem;
-    border-radius: 999px;
-    font-weight: 700;
+    border-radius: 0.375rem;
+    font-weight: 600;
     line-height: 1.2;
     text-decoration: none;
     transition:
       background-color 160ms ease,
       color 160ms ease,
-      transform 160ms ease;
+      transform 160ms ease,
+      box-shadow 160ms ease;
   }
   .btn:active {
     transform: translateY(1px);
@@ -131,16 +119,17 @@
   }
   .btn-primary:hover {
     background: var(--color-crate-soft);
+    box-shadow: 0 4px 16px rgb(16 47 40 / 0.12);
   }
   .btn-citrus {
     background: var(--color-citrus);
     color: var(--color-ink);
   }
   .btn-citrus:hover {
-    background: #ffb547;
+    background: #efb66c;
   }
   .btn-outline {
-    box-shadow: inset 0 0 0 2px currentColor;
+    box-shadow: inset 0 0 0 1px currentColor;
   }
   .btn-outline:hover {
     background: rgb(23 39 30 / 0.06);
@@ -160,6 +149,63 @@
 
   .prose-market p + p {
     margin-top: 1rem;
+  }
+
+  .eyebrow {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    line-height: 1.6;
+    text-transform: uppercase;
+  }
+
+  .hero-title {
+    font-size: clamp(4.25rem, 10vw, 8.1rem);
+    line-height: 0.98;
+    letter-spacing: -0.045em;
+  }
+
+  .hero-title em {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: 400;
+    letter-spacing: -0.045em;
+  }
+
+  .market-photo {
+    border-radius: 0.75rem 0.75rem 5rem 0.75rem;
+  }
+
+  .market-detail {
+    border-top: 1px solid rgb(23 63 53 / 0.15);
+    padding-top: 1.25rem;
+  }
+
+  .category-label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 600;
+    letter-spacing: -0.035em;
+  }
+
+  .category-arrow {
+    display: grid;
+    width: 2.5rem;
+    height: 2.5rem;
+    flex-shrink: 0;
+    place-items: center;
+    border: 1px solid rgb(248 245 236 / 0.45);
+    border-radius: 50%;
+    font-family: var(--font-sans);
+    font-size: 1.25rem;
+    transition: background-color 180ms ease;
+  }
+
+  .group:hover .category-arrow {
+    background: rgb(248 245 236 / 0.15);
   }
 }
 

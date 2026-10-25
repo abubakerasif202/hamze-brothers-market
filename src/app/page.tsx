@@ -22,14 +22,6 @@ const tileLayout = [
   "sm:col-span-2 lg:col-span-3 min-h-[16rem]",
 ];
 
-const accentBg = {
-  red: "bg-pomegranate text-white",
-  green: "bg-leaf text-white",
-  leaf: "bg-leaf-bright text-ink",
-  orange: "bg-citrus text-ink",
-  purple: "bg-fig text-white",
-} as const;
-
 const juiceFlavours = categories.find((c) => c.id === "juices")?.examples ?? [];
 
 export default function HomePage() {
@@ -37,47 +29,50 @@ export default function HomePage() {
   return (
     <>
       {/* Hero */}
-      <section className="relative overflow-hidden">
-        <div className="mx-auto grid max-w-7xl gap-10 px-4 pt-10 pb-16 sm:px-6 md:pt-14 lg:grid-cols-[1.1fr_1fr] lg:items-center lg:gap-12 lg:px-8 lg:pb-24">
-          <div>
-            <p className="flex items-center gap-2 font-semibold text-ink-soft">
-              <Icon name="pin" className="text-pomegranate" />
+      <section className="relative overflow-hidden" aria-labelledby="hero-heading">
+        <div className="mx-auto grid max-w-7xl gap-12 px-4 pt-10 pb-14 sm:px-6 md:pt-14 lg:grid-cols-[1fr_1fr] lg:items-center lg:gap-16 lg:px-8 lg:pt-16 lg:pb-20">
+          <div className="min-w-0">
+            <p className="eyebrow flex items-center gap-2 text-crate">
+              <span className="h-px w-7 bg-citrus" aria-hidden="true" />
               {business.address.centre}, {business.address.suburb}
             </p>
-            <h1 className="sign mt-5 text-[clamp(4.25rem,15vw,9.5rem)]">
+            <h1 id="hero-heading" className="sign hero-title mt-6 text-crate">
               <span className="sr-only">{business.name}: </span>
-              <span className="rise block text-pomegranate">Fresh.</span>
-              <span className="rise block text-leaf [animation-delay:120ms]">Local.</span>
-              <span className="rise block text-fig [animation-delay:240ms]">Family.</span>
+              <span className="rise block">Fresh.</span>
+              <span className="rise block [animation-delay:120ms]">Local.</span>
+              <em className="rise block text-crate-soft [animation-delay:240ms]">Family.</em>
             </h1>
-            <p className="mt-7 max-w-xl text-lg leading-relaxed text-ink-soft md:text-xl">
-              Hamze Brothers is the family fruit market at Guildford Plaza. Fruit and veg hand-selected by the family,
-              juice pressed in store and the pantry staples you came for. Open 7 days, {formatTime(hours.open)} to{" "}
-              {formatTime(hours.close)}.
+            <p className="mt-7 max-w-md text-lg leading-relaxed text-ink-soft">
+              Hand-selected fruit and veg. Juice pressed in store. The everyday staples that bring everyone to the
+              table. Welcome to your family market at Guildford Plaza.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <a
                 href={business.links.googleDirections}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn btn-primary text-lg"
+                className="btn btn-primary"
               >
                 <Icon name="directions" />
                 Get directions
                 <span className="sr-only">(opens Google Maps in a new tab)</span>
               </a>
-              <Link href="/shop" className="btn btn-outline text-lg text-crate">
-                <Icon name="basket" />
-                Explore the shopping preview
+              <Link href="/produce" className="btn btn-outline text-crate">
+                Explore the market <span aria-hidden="true">↗</span>
               </Link>
             </div>
-            <p className="mt-6 text-[0.95rem] font-semibold text-ink-soft">
-              <OpenStatus />
-            </p>
+            <div className="market-detail mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-ink-soft">
+              <span className="inline-flex items-center gap-2">
+                <Icon name="clock" /> Open 7 days · {formatTime(hours.open)}–{formatTime(hours.close)}
+              </span>
+              <span className="font-semibold text-crate">
+                <OpenStatus />
+              </span>
+            </div>
           </div>
 
-          <div className="relative mx-auto w-full max-w-xl lg:max-w-none">
-            <div className="relative aspect-[4/5] overflow-hidden rounded-[2rem] bg-cream-deep sm:aspect-[5/5] lg:aspect-[4/5]">
+          <div className="relative mx-auto mb-10 w-full max-w-xl pl-5 sm:pl-9 lg:mb-6 lg:max-w-none">
+            <div className="market-photo relative aspect-[4/5] overflow-hidden bg-cream-deep sm:aspect-[5/5] lg:aspect-[4/5]">
               <Photo
                 image="bloodOrange"
                 fallbackLabel="Fresh from the floor"
@@ -85,13 +80,22 @@ export default function HomePage() {
                 preload
               />
             </div>
-            <div className="absolute -bottom-6 -left-2 w-[46%] overflow-hidden rounded-[1.25rem] border-[6px] border-cream shadow-xl sm:-left-8">
+            <div className="absolute -bottom-9 left-0 w-[48%] overflow-hidden rounded-lg border-[6px] border-cream shadow-lg">
               <div className="relative aspect-[4/3]">
                 <Photo image="inStoreDisplay" fallbackLabel="In store" sizes="(min-width: 1024px) 22vw, 45vw" />
               </div>
             </div>
-            <p className="ticket absolute top-4 right-4 bg-cream text-lg text-crate sm:text-xl">
-              Straight from our floor
+            <div className="absolute top-5 right-5 flex size-24 rotate-6 flex-col items-center justify-center rounded-full bg-citrus text-center text-crate shadow-sm sm:size-28">
+              <span className="font-display text-base leading-tight font-semibold sm:text-lg">
+                Fresh from
+                <br />
+                our floor
+              </span>
+            </div>
+            <p className="absolute right-0 -bottom-9 max-w-[45%] text-right text-xs leading-relaxed text-ink-soft">
+              A little look inside
+              <br />
+              your local market.
             </p>
           </div>
         </div>
@@ -101,9 +105,14 @@ export default function HomePage() {
       <section className="on-crate bg-crate text-cream" aria-labelledby="floor-heading">
         <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-24 lg:px-8">
           <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-            <h2 id="floor-heading" className="sign text-[clamp(2.75rem,7vw,5.5rem)]">
-              What&apos;s on the floor
-            </h2>
+            <div>
+              <p className="eyebrow mb-4 text-citrus">Explore the market</p>
+              <h2 id="floor-heading" className="sign text-[clamp(2.75rem,6vw,4.5rem)]">
+                Good things,
+                <br />
+                all in one place.
+              </h2>
+            </div>
             <p className="max-w-md text-cream/80">
               Five corners of the market, stocked fresh. Seasonal selection changes, so the examples here are a guide to
               what you&apos;ll usually find.
@@ -135,7 +144,12 @@ export default function HomePage() {
                   aria-hidden="true"
                 />
                 <div className="absolute inset-x-0 bottom-0 p-5 sm:p-6" aria-hidden="true">
-                  <span className={`ticket text-xl sm:text-2xl ${accentBg[cat.accent]}`}>{cat.name}</span>
+                  <span className="category-label">
+                    {cat.name}
+                    <span className="category-arrow" aria-hidden="true">
+                      ↗
+                    </span>
+                  </span>
                   <p className="mt-3 max-w-sm text-[0.95rem] leading-snug text-cream/90">{cat.strapline}</p>
                 </div>
               </li>
@@ -147,10 +161,11 @@ export default function HomePage() {
       {/* Juices */}
       <section aria-labelledby="juice-heading" className="bg-cream-deep">
         <div className="mx-auto grid max-w-7xl gap-10 px-4 py-16 sm:px-6 md:grid-cols-2 md:items-center md:py-24 lg:px-8">
-          <div className="relative order-last aspect-[4/5] overflow-hidden rounded-[2rem] md:order-first">
+          <div className="relative order-last aspect-[4/5] overflow-hidden rounded-[var(--radius-tile)] md:order-first">
             <Photo image="orangeJuiceBottle" fallbackLabel="Fresh juice" sizes="(min-width: 768px) 45vw, 92vw" />
           </div>
           <div>
+            <p className="eyebrow mb-4 text-crate-soft">From fruit to bottle</p>
             <h2 id="juice-heading" className="sign text-[clamp(2.75rem,7vw,5.25rem)] text-crate">
               Juice, pressed in front of you
             </h2>
@@ -190,6 +205,7 @@ export default function HomePage() {
       {/* Inside the market */}
       <section aria-labelledby="inside-heading">
         <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-24 lg:px-8">
+          <p className="eyebrow mb-4 text-crate-soft">Your neighbourhood market</p>
           <h2 id="inside-heading" className="sign max-w-3xl text-[clamp(2.75rem,7vw,5.25rem)] text-crate">
             A market you can walk through, not just past
           </h2>
@@ -316,9 +332,10 @@ export default function HomePage() {
       </section>
 
       {/* Click & collect pitch */}
-      <section aria-labelledby="preview-heading">
+      <section aria-labelledby="preview-heading" className="bg-cream-deep">
         <div className="mx-auto grid max-w-7xl gap-10 px-4 py-16 sm:px-6 md:grid-cols-[1fr_auto] md:items-center md:py-24 lg:px-8">
           <div>
+            <p className="eyebrow mb-4 text-crate-soft">A taste of what&apos;s possible · Demo</p>
             <h2 id="preview-heading" className="sign max-w-3xl text-[clamp(2.75rem,7vw,5.25rem)] text-crate">
               Picture ordering ahead
             </h2>
