@@ -2,7 +2,8 @@ import { expect, test } from "@playwright/test";
 
 test.describe("opening intro", () => {
   test("plays on first visit, can be skipped, and stays gone for the session", async ({ page }) => {
-    await page.goto("/");
+    // Don't wait for the load event: on a busy machine it can outlast the 3.6s intro itself.
+    await page.goto("/", { waitUntil: "commit" });
     const intro = page.locator(".intro");
     await expect(intro).toBeVisible();
     await page.getByRole("button", { name: "Skip intro" }).click();

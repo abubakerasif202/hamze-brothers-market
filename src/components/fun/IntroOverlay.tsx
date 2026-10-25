@@ -63,7 +63,7 @@ export function IntroOverlay() {
         <p className="intro-headline" aria-label="Freshness has arrived!">
           {["FRESHNESS", "HAS", "ARRIVED!"].map((w, i) => (
             <span key={w} aria-hidden="true" style={{ ["--w" as string]: i }}>
-              {w}{" "}
+              {w}
             </span>
           ))}
         </p>
