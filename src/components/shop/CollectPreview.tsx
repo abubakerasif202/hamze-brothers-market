@@ -89,7 +89,7 @@ export function CollectPreview({ lines, onDone }: { lines: BasketLines; onDone: 
                     {day.slots.map((slot) => (
                       <label
                         key={slot.id}
-                        className="flex min-h-11 cursor-pointer items-center justify-center rounded-xl border-2 border-ink/15 px-2 py-2 text-center text-sm font-semibold has-[:checked]:border-crate has-[:checked]:bg-crate has-[:checked]:text-cream has-[:focus-visible]:outline has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-citrus"
+                        className="flex min-h-11 cursor-pointer items-center justify-center rounded-xl border-2 border-ink/15 px-2 py-2 text-center text-sm font-semibold transition-colors hover:border-crate/40 has-[:checked]:border-crate has-[:checked]:bg-crate has-[:checked]:text-cream has-[:focus-visible]:outline has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-citrus"
                       >
                         <input
                           type="radio"

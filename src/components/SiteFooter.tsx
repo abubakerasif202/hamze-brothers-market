@@ -61,7 +61,7 @@ export function SiteFooter() {
           <ul className="mt-4 grid grid-cols-2 gap-x-6 gap-y-2 text-cream/85">
             {navItems.map((item) => (
               <li key={item.href}>
-                <Link href={item.href} className="hover:text-citrus">
+                <Link href={item.href} className="inline-block py-1 transition-colors hover:text-citrus">
                   {item.label}
                 </Link>
               </li>

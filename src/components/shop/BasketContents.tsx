@@ -68,7 +68,11 @@ export function BasketContents({
         <div className="flex items-start gap-3 rounded-xl bg-citrus/20 p-3 text-sm" role="status">
           <Icon name="info" className="mt-0.5 shrink-0" />
           <p className="flex-1">Some saved basket items couldn&apos;t be read, so they were removed.</p>
-          <button type="button" className="font-semibold underline" onClick={dismissRecoveredNotice}>
+          <button
+            type="button"
+            className="inline-flex min-h-11 cursor-pointer items-center px-2 font-semibold underline"
+            onClick={dismissRecoveredNotice}
+          >
             Dismiss
           </button>
         </div>
@@ -123,7 +127,7 @@ export function BasketContents({
           </button>
           <button
             type="button"
-            className="self-center text-sm font-semibold text-ink-soft underline underline-offset-2 hover:text-pomegranate"
+            className="inline-flex min-h-11 cursor-pointer items-center self-center py-2 text-sm font-semibold text-ink-soft underline underline-offset-2 hover:text-pomegranate"
             onClick={() => {
               announce(clearBasket());
               headingRef.current?.focus();

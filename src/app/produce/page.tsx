@@ -17,7 +17,7 @@ const accentText = {
   red: "text-pomegranate",
   green: "text-leaf",
   leaf: "text-leaf",
-  orange: "text-citrus",
+  orange: "text-citrus-deep",
   purple: "text-fig",
 } as const;
 
@@ -31,7 +31,10 @@ export default function ProducePage() {
             <ul className="flex flex-wrap gap-2 lg:max-w-sm lg:justify-end">
               {categories.map((c) => (
                 <li key={c.id}>
-                  <a href={`#${c.id}`} className="ticket bg-cream text-base text-crate hover:bg-citrus">
+                  <a
+                    href={`#${c.id}`}
+                    className="ticket min-h-11 bg-cream px-4 py-2 text-base text-crate transition-colors hover:bg-citrus hover:text-ink"
+                  >
                     {c.name}
                   </a>
                 </li>

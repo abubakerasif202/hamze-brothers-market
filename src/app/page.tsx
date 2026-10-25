@@ -90,10 +90,17 @@ export default function HomePage() {
                 <Photo image="inStoreDisplay" fallbackLabel="In store" sizes="(min-width: 1024px) 22vw, 45vw" />
               </div>
             </div>
-            <div className="fruit-float -top-10 -left-2 hidden sm:block" style={{ ["--w" as string]: "6.5rem", ["--depth" as string]: "-22", ["--rot" as string]: "-8deg" }} aria-hidden="false">
+            <div
+              className="fruit-float -top-10 -left-2 hidden sm:block"
+              style={{ ["--w" as string]: "6.5rem", ["--depth" as string]: "-22", ["--rot" as string]: "-8deg" }}
+              aria-hidden="false"
+            >
               <Banana />
             </div>
-            <div className="fruit-float -right-3 bottom-24 hidden md:block" style={{ ["--w" as string]: "6rem", ["--depth" as string]: "26", ["--delay" as string]: "1.2s" }}>
+            <div
+              className="fruit-float -right-3 bottom-24 hidden md:block"
+              style={{ ["--w" as string]: "6rem", ["--depth" as string]: "26", ["--delay" as string]: "1.2s" }}
+            >
               <Strawberry />
             </div>
             <div className="absolute top-5 right-5 flex size-24 rotate-6 flex-col items-center justify-center rounded-full bg-[var(--fruit-banana)] text-center text-crate shadow-sm sm:size-28">
@@ -133,36 +140,36 @@ export default function HomePage() {
             {categories.map((cat, i) => (
               <li key={cat.id} className={`${tileLayout[i]} cat-tile-${i}`}>
                 <Reveal delay={i * 70} className="size-full">
-                <Tilt className="group cat-tile-ring relative size-full overflow-hidden rounded-[var(--radius-tile)]">
-                <Link href={`/produce#${cat.id}`} className="absolute inset-0 z-10 rounded-[var(--radius-tile)]">
-                  <span className="sr-only">
-                    {cat.name}: {cat.strapline}
-                  </span>
-                </Link>
-                <Photo
-                  image={cat.image}
-                  fallbackLabel={cat.name}
-                  sizes={
-                    i === 0
-                      ? "(min-width: 1024px) 60vw, 92vw"
-                      : "(min-width: 1024px) 40vw, (min-width: 640px) 46vw, 92vw"
-                  }
-                  imgClassName="transition-transform duration-700 group-hover:scale-[1.04]"
-                />
-                <div
-                  className="absolute inset-0 bg-gradient-to-t from-crate-deep/90 via-crate-deep/25 to-transparent"
-                  aria-hidden="true"
-                />
-                <div className="absolute inset-x-0 bottom-0 p-5 sm:p-6" aria-hidden="true">
-                  <span className="category-label">
-                    {cat.name}
-                    <span className="category-arrow" aria-hidden="true">
-                      ↗
-                    </span>
-                  </span>
-                  <p className="mt-3 max-w-sm text-[0.95rem] leading-snug text-cream/90">{cat.strapline}</p>
-                </div>
-                </Tilt>
+                  <Tilt className="group cat-tile-ring relative size-full overflow-hidden rounded-[var(--radius-tile)]">
+                    <Link href={`/produce#${cat.id}`} className="absolute inset-0 z-10 rounded-[var(--radius-tile)]">
+                      <span className="sr-only">
+                        {cat.name}: {cat.strapline}
+                      </span>
+                    </Link>
+                    <Photo
+                      image={cat.image}
+                      fallbackLabel={cat.name}
+                      sizes={
+                        i === 0
+                          ? "(min-width: 1024px) 60vw, 92vw"
+                          : "(min-width: 1024px) 40vw, (min-width: 640px) 46vw, 92vw"
+                      }
+                      imgClassName="transition-transform duration-700 group-hover:scale-[1.04]"
+                    />
+                    <div
+                      className="absolute inset-0 bg-gradient-to-t from-crate-deep/90 via-crate-deep/25 to-transparent"
+                      aria-hidden="true"
+                    />
+                    <div className="absolute inset-x-0 bottom-0 p-5 sm:p-6" aria-hidden="true">
+                      <span className="category-label">
+                        {cat.name}
+                        <span className="category-arrow" aria-hidden="true">
+                          ↗
+                        </span>
+                      </span>
+                      <p className="mt-3 max-w-sm text-[0.95rem] leading-snug text-cream/90">{cat.strapline}</p>
+                    </div>
+                  </Tilt>
                 </Reveal>
               </li>
             ))}

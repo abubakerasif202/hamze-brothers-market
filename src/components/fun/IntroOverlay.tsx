@@ -68,7 +68,11 @@ export function IntroOverlay() {
           ))}
         </p>
       </div>
-      <button type="button" className="intro-skip" onClick={() => setGone(true)}>
+      <button
+        type="button"
+        className="intro-skip cursor-pointer transition-colors focus-visible:outline-2 focus-visible:outline-cream"
+        onClick={() => setGone(true)}
+      >
         Skip intro
       </button>
     </div>

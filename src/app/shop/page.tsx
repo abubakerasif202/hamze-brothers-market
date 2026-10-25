@@ -37,11 +37,11 @@ export default function ShopPage() {
               <li key={s.title} className="rounded-2xl bg-crate-soft/80 p-4">
                 <p className="sign text-4xl text-citrus">{i + 1}</p>
                 <p className="mt-1 font-semibold text-cream">{s.title}</p>
-                <p className="mt-1 text-sm text-cream/75">{s.body}</p>
+                <p className="mt-1 text-sm text-cream/90">{s.body}</p>
               </li>
             ))}
           </ol>
-          <p className="mt-6 text-sm text-cream/75">
+          <p className="mt-6 text-sm text-cream/90">
             Want to shop today?{" "}
             <a
               href={business.links.googleDirections}

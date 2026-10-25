@@ -41,7 +41,7 @@ export function ProductCard({ product, qty }: { product: DemoProduct; qty: numbe
         <button
           type="button"
           onClick={() => openProduct(product.id)}
-          className="relative block size-full overflow-hidden"
+          className="relative block size-full cursor-pointer overflow-hidden focus-visible:outline-2 focus-visible:outline-crate"
           aria-label={`View details for ${product.name}`}
         >
           <Photo
@@ -64,7 +64,11 @@ export function ProductCard({ product, qty }: { product: DemoProduct; qty: numbe
       <div className="flex min-w-0 flex-1 flex-col p-4 sm:p-5">
         <p className="text-sm font-semibold text-ink-soft">{category.name}</p>
         <h3 className="mt-0.5 font-display text-xl leading-tight font-bold">
-          <button type="button" className="text-left hover:text-crate" onClick={() => openProduct(product.id)}>
+          <button
+            type="button"
+            className="cursor-pointer text-left hover:text-crate focus-visible:rounded focus-visible:outline-2 focus-visible:outline-crate"
+            onClick={() => openProduct(product.id)}
+          >
             {product.name}
           </button>
         </h3>

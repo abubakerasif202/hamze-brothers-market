@@ -58,10 +58,10 @@ function fly(from: AddDetail) {
   );
   anim.onfinish = () => {
     el.remove();
-    cart.animate(
-      [{ transform: "scale(1)" }, { transform: "scale(1.35) rotate(-8deg)" }, { transform: "scale(1)" }],
-      { duration: 380, easing: "ease-out" },
-    );
+    cart.animate([{ transform: "scale(1)" }, { transform: "scale(1.35) rotate(-8deg)" }, { transform: "scale(1)" }], {
+      duration: 380,
+      easing: "ease-out",
+    });
   };
 }
 

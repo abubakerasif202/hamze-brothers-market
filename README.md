@@ -1,6 +1,6 @@
 # Hamze Brothers Fruit Market website
 
-Website for **Hamze Brothers Fruit Market**, Guildford Plaza, 282 Guildford Road, Guildford NSW 2161. *Fresh. Local. Family.*
+Website for **Hamze Brothers Fruit Market**, Guildford Plaza, 282 Guildford Road, Guildford NSW 2161. _Fresh. Local. Family._
 
 Built by [AB Web Studio](https://abwebstudio.com.au) with Next.js 16 (App Router, Turbopack), React 19, TypeScript and Tailwind CSS 4. All pages are statically prerendered. There's no backend, database or environment secret.
 
@@ -8,14 +8,14 @@ Built by [AB Web Studio](https://abwebstudio.com.au) with Next.js 16 (App Router
 
 ## Pages
 
-| Route | Purpose |
-| --- | --- |
-| `/` | Introduction, directions (primary action), produce categories, juices, store imagery, specials, location, shopping-preview pitch |
-| `/our-market` | About the market, using only facts the business has published |
-| `/produce` | Fruit, vegetables, herbs & greens, fresh juices, pantry & deli, with example items |
-| `/specials` | Date-driven specials board. Shows an Instagram prompt when nothing current is listed |
-| `/visit` | Address, hours, holiday note, parking, directions, click-to-load map, Instagram contact |
-| `/shop` | **Online Shopping Preview (demo only)**: catalogue, search, filters, product details, persistent demo basket, click-and-collect walkthrough |
+| Route         | Purpose                                                                                                                                     |
+| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| `/`           | Introduction, directions (primary action), produce categories, juices, store imagery, specials, location, shopping-preview pitch            |
+| `/our-market` | About the market, using only facts the business has published                                                                               |
+| `/produce`    | Fruit, vegetables, herbs & greens, fresh juices, pantry & deli, with example items                                                          |
+| `/specials`   | Date-driven specials board. Shows an Instagram prompt when nothing current is listed                                                        |
+| `/visit`      | Address, hours, holiday note, parking, directions, click-to-load map, Instagram contact                                                     |
+| `/shop`       | **Online Shopping Preview (demo only)**: catalogue, search, filters, product details, persistent demo basket, click-and-collect walkthrough |
 
 ## Local development
 
@@ -43,11 +43,11 @@ The project deploys to Vercel with zero configuration (framework preset **Next.j
 
 Optional environment variables (see `.env.example`):
 
-| Variable | Default | Purpose |
-| --- | --- | --- |
-| `NEXT_PUBLIC_SITE_URL` | Vercel production URL | Canonical URL for metadata, sitemap and structured data |
-| `NEXT_PUBLIC_SITE_INDEXABLE` | unset (= hidden) | Launch switch, see below |
-| `GOOGLE_PLACES_API_KEY` | unset | Server-only key for the live Google rating and reviews, see below |
+| Variable                     | Default               | Purpose                                                           |
+| ---------------------------- | --------------------- | ----------------------------------------------------------------- |
+| `NEXT_PUBLIC_SITE_URL`       | Vercel production URL | Canonical URL for metadata, sitemap and structured data           |
+| `NEXT_PUBLIC_SITE_INDEXABLE` | unset (= hidden)      | Launch switch, see below                                          |
+| `GOOGLE_PLACES_API_KEY`      | unset                 | Server-only key for the live Google rating and reviews, see below |
 
 ### Launch switch
 
@@ -71,8 +71,8 @@ The home page ("What shoppers say") and the Visit page show the shop's **live** 
 **To switch it on** (needs a Google Cloud account with billing, chosen by the business or studio):
 
 1. In Google Cloud Console, create or choose a project and enable **Places API (New)**.
-2. Create an API key. Under *API restrictions*, allow **Places API (New)** only.
-3. Under *Quotas* for Places API (New), set a daily request cap (e.g. 500/day) so costs stay bounded. Reviews and rating are billed as Place Details (Enterprise + Atmosphere); check current pricing and free usage.
+2. Create an API key. Under _API restrictions_, allow **Places API (New)** only.
+3. Under _Quotas_ for Places API (New), set a daily request cap (e.g. 500/day) so costs stay bounded. Reviews and rating are billed as Place Details (Enterprise + Atmosphere); check current pricing and free usage.
 4. In Vercel → Project → Settings → Environment Variables, add `GOOGLE_PLACES_API_KEY` for Production (and Preview if wanted), then redeploy.
 5. Check `https://<site>/api/google-reviews` returns `"status":"ok"`.
 
@@ -80,14 +80,14 @@ The home page ("What shoppers say") and the Visit page show the shop's **live** 
 
 All content lives in typed files under `src/content/`. Page layouts don't need to change for routine edits.
 
-| What | File | Notes |
-| --- | --- | --- |
-| Name, address, hours, links, parking | `src/content/business.ts` | **Verified facts only.** Phone and email are `null` until the business supplies them. |
-| Holiday / special trading hours | `business.hoursExceptions` | Add `{ date: "2026-12-25", label: "Christmas Day", closed: true }` or with `open`/`close`. The live "open now" status and the Visit page use these. Remove past entries. |
-| Specials | `src/content/specials.ts` | Each special has `startDate`/`endDate` (inclusive, Sydney time). Expired specials hide automatically in the browser. Never re-post an old Instagram offer as current. |
-| Produce categories and example items | `src/content/categories.ts` | Examples are labelled "seasonal availability varies". They are not a stock list. |
-| Images and alt text | `src/content/images.ts` | Put new files in `public/images/…`, register them here and record the source in `IMAGE_SOURCES.md`. Use JPEGs about 1400–2000 px on the long edge. Next.js serves AVIF/WebP at the right size automatically. |
-| Demo catalogue | `src/content/demo/products.ts` | Demonstration data only (see below). |
+| What                                 | File                           | Notes                                                                                                                                                                                                        |
+| ------------------------------------ | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Name, address, hours, links, parking | `src/content/business.ts`      | **Verified facts only.** Phone and email are `null` until the business supplies them.                                                                                                                        |
+| Holiday / special trading hours      | `business.hoursExceptions`     | Add `{ date: "2026-12-25", label: "Christmas Day", closed: true }` or with `open`/`close`. The live "open now" status and the Visit page use these. Remove past entries.                                     |
+| Specials                             | `src/content/specials.ts`      | Each special has `startDate`/`endDate` (inclusive, Sydney time). Expired specials hide automatically in the browser. Never re-post an old Instagram offer as current.                                        |
+| Produce categories and example items | `src/content/categories.ts`    | Examples are labelled "seasonal availability varies". They are not a stock list.                                                                                                                             |
+| Images and alt text                  | `src/content/images.ts`        | Put new files in `public/images/…`, register them here and record the source in `IMAGE_SOURCES.md`. Use JPEGs about 1400–2000 px on the long edge. Next.js serves AVIF/WebP at the right size automatically. |
+| Demo catalogue                       | `src/content/demo/products.ts` | Demonstration data only (see below).                                                                                                                                                                         |
 
 Add a special:
 

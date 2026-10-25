@@ -76,7 +76,7 @@ export function SiteHeader() {
       <header className="sticky top-0 z-40 border-b border-crate/15 bg-cream/95 backdrop-blur supports-[backdrop-filter]:bg-cream/90">
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-4 focus:z-50 focus:rounded-full focus:bg-crate focus:px-4 focus:py-2 focus:text-cream"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-4 focus:z-50 focus:rounded-full focus:bg-crate focus:px-5 focus:py-2.5 focus:text-cream focus:shadow-xl focus:ring-2 focus:ring-citrus focus:outline-none"
         >
           Skip to content
         </a>
@@ -110,8 +110,8 @@ export function SiteHeader() {
                     <Link
                       href={item.href}
                       aria-current={active ? "page" : undefined}
-                      className={`relative rounded px-3 py-2 text-sm font-medium transition-colors hover:bg-ink/5 ${
-                        active ? "text-crate" : "text-ink-soft"
+                      className={`relative rounded px-3 py-2 text-sm transition-colors hover:bg-ink/5 ${
+                        active ? "font-semibold text-crate" : "font-medium text-ink-soft"
                       }`}
                     >
                       {item.label}
@@ -180,7 +180,7 @@ export function SiteHeader() {
                   <Link
                     href={item.href}
                     aria-current={active ? "page" : undefined}
-                    className="sign flex items-center justify-between py-4 text-[2.4rem]"
+                    className="sign flex min-h-14 items-center justify-between py-4 text-[2.4rem] transition-colors hover:text-citrus"
                     onClick={() => setOpen(false)}
                   >
                     {item.label}

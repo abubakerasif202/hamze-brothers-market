@@ -87,7 +87,7 @@ export function ShopPreview() {
 
   return (
     <ShopContext.Provider value={ctx}>
-      <div className="mx-auto grid max-w-7xl gap-10 px-4 py-10 sm:px-6 md:py-14 lg:grid-cols-[1fr_22rem] lg:px-8">
+      <div className="mx-auto grid max-w-7xl gap-10 px-4 pt-10 pb-32 sm:px-6 md:py-14 lg:grid-cols-[1fr_22rem] lg:px-8">
         <div className="min-w-0">
           <h2 className="sr-only">Demo catalogue</h2>
           <div className="flex flex-col gap-4">
@@ -107,8 +107,18 @@ export function ShopPreview() {
                 placeholder="Search fruit, veg, juices…"
                 autoComplete="off"
                 enterKeyHint="search"
-                className="h-13 w-full rounded-full border-2 border-ink/15 bg-paper pr-4 pl-12 text-base placeholder:text-ink-soft/70 focus:border-crate focus:outline-none focus-visible:outline-3 focus-visible:outline-citrus"
+                className="h-13 w-full rounded-full border-2 border-ink/15 bg-paper pr-12 pl-12 text-base placeholder:text-ink-soft/70 focus:border-crate focus:outline-none focus-visible:outline-3 focus-visible:outline-citrus"
               />
+              {query && (
+                <button
+                  type="button"
+                  onClick={() => setQuery("")}
+                  className="absolute top-1/2 right-3 inline-flex size-9 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full text-ink-soft hover:bg-ink/10 hover:text-ink focus-visible:outline-crate"
+                  aria-label="Clear search input"
+                >
+                  <Icon name="close" width="1.1em" height="1.1em" />
+                </button>
+              )}
             </div>
             <div
               role="group"
@@ -123,7 +133,7 @@ export function ShopPreview() {
                     type="button"
                     aria-pressed={active}
                     onClick={() => setFilter(b.id)}
-                    className={`shrink-0 rounded-full px-4 py-2 text-[0.95rem] font-semibold transition-colors ${
+                    className={`inline-flex min-h-11 shrink-0 cursor-pointer items-center gap-1.5 rounded-full px-4 py-2 text-[0.95rem] font-semibold transition-colors ${
                       active ? "bg-crate text-cream" : "bg-paper text-ink hover:bg-cream-deep"
                     }`}
                   >
@@ -174,10 +184,10 @@ export function ShopPreview() {
       </div>
 
       {/* Small screens: floating basket button above the directions bar */}
-      <div className="fixed inset-x-0 bottom-[5.25rem] z-30 flex justify-center px-4 lg:hidden">
+      <div className="pointer-events-none fixed inset-x-0 bottom-[calc(4.75rem+max(0.75rem,env(safe-area-inset-bottom)))] z-30 flex justify-center px-4 lg:hidden">
         <button
           type="button"
-          className="btn btn-citrus shadow-lg"
+          className="btn btn-citrus pointer-events-auto shadow-lg"
           onClick={() => setBasketOpen(true)}
           aria-haspopup="dialog"
         >

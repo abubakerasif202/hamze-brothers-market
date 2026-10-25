@@ -17,6 +17,7 @@
   --color-pomegranate: #a83e36;
   --color-fig: #685164;
   --color-citrus: #e7a34a;
+  --color-citrus-deep: #b45309;
   --color-leaf: #396345;
   --color-leaf-bright: #bacda1;
 
@@ -41,6 +42,16 @@
     text-rendering: optimizeLegibility;
   }
 
+  button:not([disabled]),
+  [role="button"]:not([aria-disabled="true"]) {
+    cursor: pointer;
+  }
+
+  button[disabled],
+  [aria-disabled="true"] {
+    cursor: not-allowed;
+  }
+
   h1,
   h2,
   h3 {
@@ -55,9 +66,20 @@
   }
 
   :focus-visible {
-    outline: 3px solid var(--color-citrus);
+    outline: 3px solid var(--color-crate);
     outline-offset: 3px;
     border-radius: 6px;
+  }
+
+  .on-crate :focus-visible,
+  .bg-crate :focus-visible,
+  .bg-crate-deep :focus-visible,
+  .intro :focus-visible {
+    outline-color: var(--color-citrus);
+  }
+
+  .band-sunny :focus-visible {
+    outline-color: var(--color-crate-deep);
   }
 
   ::selection {
@@ -104,6 +126,7 @@
     font-weight: 600;
     line-height: 1.2;
     text-decoration: none;
+    cursor: pointer;
     transition:
       background-color 160ms ease,
       color 160ms ease,

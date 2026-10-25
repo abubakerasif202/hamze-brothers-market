@@ -53,7 +53,7 @@ export function Dialog({
   const position =
     variant === "sheet"
       ? "m-0 ml-auto h-dvh max-h-dvh w-full max-w-md rounded-none sm:rounded-l-[1.75rem]"
-      : "m-auto max-h-[92dvh] w-[min(100%-2rem,40rem)] rounded-[1.75rem]";
+      : "m-auto max-h-[92dvh] w-[min(100%-2rem,40rem)] rounded-2xl sm:rounded-[1.75rem]";
 
   return (
     <dialog
@@ -73,7 +73,7 @@ export function Dialog({
           <button
             type="button"
             onClick={() => ref.current?.close()}
-            className="inline-flex size-11 shrink-0 items-center justify-center rounded-full hover:bg-ink/5"
+            className="inline-flex size-11 shrink-0 cursor-pointer items-center justify-center rounded-full hover:bg-ink/5 focus-visible:outline-2 focus-visible:outline-crate"
           >
             <Icon name="close" width="1.4em" height="1.4em" />
             <span className="sr-only">Close</span>

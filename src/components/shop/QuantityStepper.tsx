@@ -25,8 +25,8 @@ export function QuantityStepper({ product, qty, onStep, size = "md", plusRef, mi
   const removes = qty <= product.step;
   const btn =
     size === "md"
-      ? "size-11 rounded-full bg-crate text-cream hover:bg-crate-soft aria-disabled:opacity-40"
-      : "size-10 rounded-full bg-cream-deep text-crate hover:bg-citrus/40 aria-disabled:opacity-40";
+      ? "size-11 rounded-full bg-crate text-cream hover:bg-crate-soft cursor-pointer aria-disabled:cursor-not-allowed aria-disabled:opacity-40"
+      : "size-11 rounded-full bg-cream-deep text-crate hover:bg-citrus/40 cursor-pointer aria-disabled:cursor-not-allowed aria-disabled:opacity-40";
   return (
     <div className="inline-flex items-center gap-2" role="group" aria-label={`Quantity of ${product.name}`}>
       <button

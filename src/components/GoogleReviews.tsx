@@ -175,7 +175,7 @@ function ReviewItem({ review }: { review: GoogleReview }) {
         {long && (
           <button
             type="button"
-            className="underline underline-offset-2"
+            className="inline-flex min-h-11 cursor-pointer items-center py-2 underline underline-offset-2 hover:text-crate-soft"
             aria-expanded={expanded}
             onClick={() => setExpanded((v) => !v)}
           >
