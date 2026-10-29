@@ -14,7 +14,7 @@ import { demoProductById } from "@/content/demo/products";
 import { Icon } from "./Icon";
 
 function isActive(pathname: string, href: string) {
-  return href === "/" ? pathname === "/" : pathname.startsWith(href);
+  return href === "/" ? pathname === "/" : pathname.startsWith(href.split("#")[0]);
 }
 
 export function SiteHeader() {
@@ -90,7 +90,7 @@ export function SiteHeader() {
           </p>
         </div>
       </div>
-      <header className="sticky top-0 z-40 border-b border-crate/15 bg-cream/95 backdrop-blur supports-[backdrop-filter]:bg-cream/90">
+      <header className="sticky top-0 z-40 border-b border-crate/15 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/90">
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-4 focus:z-50 focus:rounded-full focus:bg-crate focus:px-5 focus:py-2.5 focus:text-cream focus:shadow-xl focus:ring-2 focus:ring-citrus focus:outline-none"
@@ -156,16 +156,9 @@ export function SiteHeader() {
                 </span>
               )}
             </Link>
-            <a
-              href={business.links.googleDirections}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn-primary hidden !min-h-11 !py-2 sm:inline-flex"
-            >
-              <Icon name="directions" />
-              Get directions
-              <span className="sr-only">(opens Google Maps in a new tab)</span>
-            </a>
+            <Link href="/shop" className="btn btn-berry hidden !min-h-11 !py-2 sm:inline-flex">
+              Shop Online <span className="sr-only">preview</span>
+            </Link>
             <button
               ref={toggleRef}
               type="button"

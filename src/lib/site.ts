@@ -22,9 +22,10 @@ export const siteUrl = resolveSiteUrl();
 
 export const navItems = [
   { href: "/", label: "Home" },
-  { href: "/our-market", label: "Our Market" },
+  { href: "/produce#pantry", label: "Pantry" },
+  { href: "/our-market", label: "About" },
   { href: "/produce", label: "Produce" },
   { href: "/specials", label: "Specials" },
-  { href: "/visit", label: "Visit" },
+  { href: "/visit", label: "Visit Us" },
   { href: "/shop", label: "Shop Preview" },
 ] as const;

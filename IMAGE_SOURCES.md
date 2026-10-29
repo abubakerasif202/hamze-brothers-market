@@ -73,3 +73,9 @@ Original URL pattern: `https://images.unsplash.com/<photo ID>`. Photographer cre
 
 - The supplied "Fresh produce made easy" mockup contains AI-generated people and shop scenes, so it was used for layout direction only.
 - The "Saturday Special" juice flyer advertises a past offer, so it is not shown.
+
+## October 2026 homepage reference
+
+`design-reference/reference-homepage.png` is the supplied visual specification. The supplied Google Maps PDF was inspected and individual photographs extracted to `outputs/pdf-extracted/` for private reference only. Its main interior panorama is attributed to Edison Liang and carries a copyright notice; no license for republication was supplied. These PDF images are not served by the site. Store entrance imagery remains pending an owner-supplied or licensed original.
+
+The homepage hero and story use the existing business-owned `in-store-display` photograph, optimized without distortion to `public/images/hamze/in-store-display.webp`. The existing owned blood-orange photograph is also optimized to WebP. Category images retain the licensed, illustrative produce photography registered above. The mockup address/hours were not adopted; verified business configuration remains authoritative.

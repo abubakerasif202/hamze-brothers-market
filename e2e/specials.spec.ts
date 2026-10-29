@@ -31,9 +31,9 @@ test.describe("homepage specials (production build)", () => {
     expect(sitemap).not.toContain("dev/specials-preview");
   });
 
-  test("the hero fruit platter is still the homepage hero", async ({ page }) => {
+  test("authentic market photography is the homepage hero", async ({ page }) => {
     await page.goto("/");
-    await expect(page.locator('img[src*="hero-fruit-platter"]').first()).toBeVisible();
+    await expect(page.locator('.market-hero img[src*="in-store-display"]')).toBeVisible();
   });
 
   test("without JavaScript the heading, hero and an Instagram fallback stay visible", async ({ browser }) => {
@@ -42,7 +42,7 @@ test.describe("homepage specials (production build)", () => {
     await page.goto("/");
     await expect(page.getByRole("heading", { level: 2, name: /Weekly Specials/i })).toBeVisible();
     await expect(page.getByText(/Specials need JavaScript to check their dates/)).toBeVisible();
-    await expect(page.locator('img[src*="hero-fruit-platter"]').first()).toBeVisible();
+    await expect(page.locator('.market-hero img[src*="in-store-display"]')).toBeVisible();
     await context.close();
   });
 

@@ -1,391 +1,194 @@
 import Link from "next/link";
-import { Banana, OrangeBros, PeekingFruit, Strawberry, Watermelon } from "@/components/fun/Fruit";
-import { Magnetic, Reveal, Tilt } from "@/components/fun/Effects";
-import { Icon } from "@/components/Icon";
-import { MapEmbed } from "@/components/MapEmbed";
-import { OpenStatus } from "@/components/OpenStatus";
-import { Photo } from "@/components/Photo";
 import { GoogleReviewsSection } from "@/components/GoogleReviews";
-import { SpecialsShowcase } from "@/components/specials/SpecialsShowcase";
+import { Banana, Watermelon } from "@/components/fun/Fruit";
+import { Reveal } from "@/components/fun/Effects";
+import { FruitSurprise } from "@/components/fun/FruitSurprise";
+import { Photo } from "@/components/Photo";
+import { MapEmbed } from "@/components/MapEmbed";
 import { HarvestBoxes } from "@/components/shop/HarvestBoxes";
+import { SpecialsShowcase } from "@/components/specials/SpecialsShowcase";
 import { business } from "@/content/business";
 import { categories } from "@/content/categories";
 import { defaultDescription, pageMetadata } from "@/lib/seo";
 import { formatTime } from "@/lib/time";
-
 export const metadata = pageMetadata({ description: defaultDescription, path: "/" });
-
-const tileLayout = [
-  "sm:col-span-2 lg:col-span-4 lg:row-span-2 min-h-[20rem] lg:min-h-0",
-  "lg:col-span-2 min-h-[16rem]",
-  "lg:col-span-2 min-h-[16rem]",
-  "lg:col-span-3 min-h-[16rem]",
-  "sm:col-span-2 lg:col-span-3 min-h-[16rem]",
+const cards = [
+  ...categories.filter((c) => c.id !== "juices"),
+  {
+    id: "specials",
+    name: "Weekly Specials",
+    strapline: "See what’s fresh this week.",
+    image: "fruitAssortment" as const,
+  },
 ];
-
-const juiceFlavours = categories.find((c) => c.id === "juices")?.examples ?? [];
-
 export default function HomePage() {
-  const hours = business.hours.mon;
   return (
-    <>
-      {/* Hero */}
-      <section className="relative overflow-hidden" aria-labelledby="hero-heading">
-        <div className="mx-auto grid max-w-7xl gap-12 px-4 pt-10 pb-14 sm:px-6 md:pt-14 lg:grid-cols-[1fr_1fr] lg:items-center lg:gap-16 lg:px-8 lg:pt-16 lg:pb-20">
-          <div className="min-w-0">
-            <p className="eyebrow flex items-center gap-2 text-crate">
-              <span className="h-px w-7 bg-citrus" aria-hidden="true" />
-              {business.address.centre}, {business.address.suburb}
-            </p>
-            <h1 id="hero-heading" className="sign hero-title mt-6 text-crate">
-              <span className="sr-only">{business.name}: </span>
-              <span className="rise block text-[var(--fruit-strawberry)]">Fresh.</span>
-              <span className="rise block text-[var(--fruit-orange)] [animation-delay:120ms]">Local.</span>
-              <em className="rise block text-crate-soft [animation-delay:240ms]">Family.</em>
-            </h1>
-            <p className="mt-7 max-w-md text-lg leading-relaxed text-ink-soft">
-              Hand-selected fruit and veg. Juice pressed in store. The everyday staples that bring everyone to the
-              table. Welcome to your family market at Guildford Plaza.
-            </p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-              <Magnetic>
-                <Link href="/shop" className="btn btn-berry text-lg">
-                  <Icon name="basket" />
-                  Shop online (preview)
-                </Link>
-              </Magnetic>
-              <Magnetic>
-                <a
-                  href={business.links.googleDirections}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn btn-primary text-lg"
-                >
-                  <Icon name="directions" />
-                  Visit our store
-                  <span className="sr-only">(opens Google Maps in a new tab)</span>
-                </a>
-              </Magnetic>
-            </div>
-            <div className="market-detail mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-ink-soft">
-              <span className="inline-flex items-center gap-2">
-                <Icon name="clock" /> Open 7 days · {formatTime(hours.open)}–{formatTime(hours.close)}
-              </span>
-              <span className="font-semibold text-crate">
-                <OpenStatus />
-              </span>
-            </div>
-          </div>
-
-          <div className="relative mx-auto mb-10 w-full max-w-xl pl-5 sm:pl-9 lg:mb-6 lg:max-w-none">
-            <div className="market-photo relative aspect-[4/5] overflow-hidden bg-cream-deep sm:aspect-[5/5] lg:aspect-[4/5]">
-              <Photo
-                image="heroFruitPlatter"
-                fallbackLabel="Seasonal fruit platter"
-                sizes="(min-width: 1024px) 45vw, 92vw"
-                preload
-              />
-            </div>
-            <div className="absolute -bottom-9 left-0 w-[48%] overflow-hidden rounded-lg border-[6px] border-cream shadow-lg">
-              <div className="relative aspect-[4/3]">
-                <Photo image="inStoreDisplay" fallbackLabel="In store" sizes="(min-width: 1024px) 22vw, 45vw" />
-              </div>
-            </div>
-            <div
-              className="fruit-float -top-10 -left-2 hidden sm:block"
-              style={{ ["--w" as string]: "6.5rem", ["--depth" as string]: "-22", ["--rot" as string]: "-8deg" }}
-              aria-hidden="false"
-            >
-              <Banana />
-            </div>
-            <div
-              className="fruit-float -right-3 bottom-24 hidden md:block"
-              style={{ ["--w" as string]: "6rem", ["--depth" as string]: "26", ["--delay" as string]: "1.2s" }}
-            >
-              <Strawberry />
-            </div>
-            <div className="absolute top-5 right-5 flex size-24 rotate-6 flex-col items-center justify-center rounded-full bg-[var(--fruit-banana)] text-center text-crate shadow-sm sm:size-28">
-              <span className="font-display text-base leading-tight font-semibold sm:text-lg">
-                Seasonal
-                <br />
-                fruit
-              </span>
-            </div>
-            <p className="absolute right-0 -bottom-9 max-w-[45%] text-right text-xs leading-relaxed text-ink-soft">
-              Illustration: fruit platter.
-              <br />
-              Small photo: our store.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Categories */}
-      <section className="on-crate bg-crate text-cream" aria-labelledby="floor-heading">
-        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-24 lg:px-8">
-          <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-            <div>
-              <p className="eyebrow mb-4 text-citrus">Explore the market</p>
-              <h2 id="floor-heading" className="sign text-[clamp(2.75rem,6vw,4.5rem)]">
-                Good things,
-                <br />
-                all in one place.
-              </h2>
-            </div>
-            <p className="max-w-md text-cream/80">
-              Five corners of the market, stocked fresh. Seasonal selection changes, so the examples here are a guide to
-              what you&apos;ll usually find.
-            </p>
-          </div>
-          <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:auto-rows-[15rem] lg:grid-cols-6">
-            {categories.map((cat, i) => (
-              <li key={cat.id} className={`${tileLayout[i]} cat-tile-${i}`}>
-                <Reveal delay={i * 70} className="size-full">
-                  <Tilt className="group cat-tile-ring relative size-full overflow-hidden rounded-[var(--radius-tile)]">
-                    <Link href={`/produce#${cat.id}`} className="absolute inset-0 z-10 rounded-[var(--radius-tile)]">
-                      <span className="sr-only">
-                        {cat.name}: {cat.strapline}
-                      </span>
-                    </Link>
-                    <Photo
-                      image={cat.image}
-                      fallbackLabel={cat.name}
-                      sizes={
-                        i === 0
-                          ? "(min-width: 1024px) 60vw, 92vw"
-                          : "(min-width: 1024px) 40vw, (min-width: 640px) 46vw, 92vw"
-                      }
-                      imgClassName="transition-transform duration-700 group-hover:scale-[1.04]"
-                    />
-                    <div
-                      className="absolute inset-0 bg-gradient-to-t from-crate-deep/90 via-crate-deep/25 to-transparent"
-                      aria-hidden="true"
-                    />
-                    <div className="absolute inset-x-0 bottom-0 p-5 sm:p-6" aria-hidden="true">
-                      <span className="category-label">
-                        {cat.name}
-                        <span className="category-arrow" aria-hidden="true">
-                          ↗
-                        </span>
-                      </span>
-                      <p className="mt-3 max-w-sm text-[0.95rem] leading-snug text-cream/90">{cat.strapline}</p>
-                    </div>
-                  </Tilt>
-                </Reveal>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
-
-      <div className="relative bg-crate" aria-hidden="true">
-        <PeekingFruit kind="orange" />
-      </div>
-      <OrangeBros />
-
-      {/* Juices */}
-      <section aria-labelledby="juice-heading" className="band-sunny relative">
-        <div className="mx-auto grid max-w-7xl gap-10 px-4 py-16 sm:px-6 md:grid-cols-2 md:items-center md:py-24 lg:px-8">
-          <div className="relative order-last aspect-[4/5] overflow-hidden rounded-[var(--radius-tile)] md:order-first">
-            <Photo image="orangeJuiceBottle" fallbackLabel="Fresh juice" sizes="(min-width: 768px) 45vw, 92vw" />
-          </div>
-          <div>
-            <p className="sticker mb-5 bg-paper text-crate">From fruit to bottle</p>
-            <h2 id="juice-heading" className="sign text-[clamp(2.75rem,7vw,5.25rem)] text-crate">
-              Juice, pressed in front of you
-            </h2>
-            <p className="mt-5 max-w-lg text-lg text-ink-soft">
-              The in-store juice machine takes whole fruit to bottle in seconds. 100% fruit, nothing added, no
-              preservatives. Flavours rotate with the season.
-            </p>
-            <ul className="mt-6 flex flex-wrap gap-2" aria-label="Juices the shop has featured">
-              {juiceFlavours.map((f) => (
-                <li key={f} className="ticket border-2 border-ink bg-paper text-base text-crate">
-                  {f}
-                </li>
-              ))}
-            </ul>
-            <p className="mt-4 text-sm text-ink-soft">
-              Ask in store, or check Instagram for today&apos;s line-up and prices.
-            </p>
-            <div className="mt-7 flex flex-wrap gap-3">
-              <Link href="/produce#juices" className="btn btn-primary">
-                Read about the juices
-              </Link>
-              <a
-                href={business.links.instagram}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn-outline text-crate"
-              >
-                <Icon name="instagram" />
-                Today&apos;s flavours
-                <span className="sr-only">(opens Instagram in a new tab)</span>
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Inside the market */}
-      <section aria-labelledby="inside-heading">
-        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-24 lg:px-8">
-          <p className="eyebrow mb-4 text-crate-soft">Your neighbourhood market</p>
-          <h2 id="inside-heading" className="sign max-w-3xl text-[clamp(2.75rem,7vw,5.25rem)] text-crate">
-            A market you can walk through, not just past
-          </h2>
-          <div className="mt-10 grid gap-4 md:grid-cols-[1.3fr_1fr]">
-            <figure className="relative min-h-[18rem] overflow-hidden rounded-[var(--radius-tile)] md:min-h-[26rem]">
-              <Photo image="inStoreDisplay" fallbackLabel="Inside the market" sizes="(min-width: 768px) 55vw, 92vw" />
-              <figcaption className="ticket absolute bottom-4 left-4 bg-cream text-base text-crate">
-                Staples stacked deep at Guildford Plaza
-              </figcaption>
-            </figure>
+    <div className="market-home">
+      <section className="market-hero" aria-labelledby="hero-heading">
+        <Photo image="inStoreDisplay" fallbackLabel="Inside Hamze Brothers" sizes="100vw" preload />
+        <div className="market-hero-shade" />
+        <div className="market-wrap market-hero-content">
+          <p className="eyebrow">✦ Fresh produce · Local market · Guildford</p>
+          <h1 id="hero-heading">
+            Fresh produce
+            <br />
+            for the <span>family</span>
+            <br />
+            table.
+          </h1>
+          <p className="hero-copy">
+            Quality fruit, fresh vegetables and pantry essentials — a welcoming local shopping experience at Guildford
+            Plaza.
+          </p>
+          <div className="market-actions">
+            <Link href="/shop" className="btn btn-berry">
+              Shop online (preview) <span aria-hidden="true">→</span>
+            </Link>
             <a
-              href={business.links.featuredReel}
+              href={business.links.googleDirections}
+              className="btn market-white"
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative flex min-h-[22rem] flex-col justify-end overflow-hidden rounded-[var(--radius-tile)] bg-crate p-6 text-cream"
             >
-              <Photo
-                image="bloodOrange"
-                fallbackLabel="Featured reel"
-                sizes="(min-width: 768px) 40vw, 92vw"
-                altOverride=""
-                imgClassName="opacity-70 transition-opacity group-hover:opacity-85"
-              />
-              <span
-                className="absolute inset-0 bg-gradient-to-t from-crate-deep via-crate-deep/30 to-transparent"
-                aria-hidden="true"
-              />
-              <span
-                className="relative grid size-16 place-items-center rounded-full bg-cream text-crate transition-transform group-hover:scale-105"
-                aria-hidden="true"
-              >
-                <Icon name="play" width="1.6em" height="1.6em" />
-              </span>
-              <span className="sign relative mt-4 text-4xl">Watch the featured reel</span>
-              <span className="relative mt-2 inline-flex items-center gap-2 text-cream/85">
-                Plays on Instagram <Icon name="external" />
-                <span className="sr-only">(opens in a new tab)</span>
-              </span>
+              Get Directions ↗
             </a>
           </div>
-          <p className="mt-6 max-w-2xl text-ink-soft">
-            Vibrant fruit displays, fully stocked spice and snack aisles and cold drink fridges, plus homemade shanklish
-            and fresh ginger shots.{" "}
-            <Link href="/our-market" className="link font-semibold text-crate">
-              More about the market
-            </Link>
-          </p>
-        </div>
-      </section>
-
-      {/* Curated Seasonal Harvest Boxes */}
-      <section aria-labelledby="boxes-heading" className="border-t border-ink/10 bg-cream-deep/60 py-16 sm:py-24">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mb-10 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-            <div>
-              <p className="eyebrow mb-3 text-pomegranate">Signature Curated Collections</p>
-              <h2 id="boxes-heading" className="sign text-[clamp(2.5rem,6vw,4.5rem)] text-crate">
-                Seasonal Harvest Boxes
-              </h2>
-            </div>
-            <p className="max-w-md text-ink-soft">
-              Short on time? Add a family fruit and veg box, Levantine mezze crate, or pressed juice trio to your Click
-              &amp; Collect preview basket in one click. Demo prices only.
-            </p>
+          <p className="market-script">Fresh. Local. Family.</p>
+          <div className="market-hero-banana">
+            <Banana />
           </div>
-          <HarvestBoxes />
         </div>
       </section>
-
-      {/* Live Google rating and reviews */}
-      <GoogleReviewsSection />
-
-      {/* Specials */}
-      <SpecialsShowcase />
-
-      {/* Visit summary */}
-      <section aria-labelledby="visit-heading" className="on-crate bg-crate text-cream">
-        <div className="mx-auto grid max-w-7xl gap-10 px-4 py-16 sm:px-6 md:py-24 lg:grid-cols-[1fr_1.2fr] lg:items-center lg:px-8">
-          <div>
-            <h2 id="visit-heading" className="sign text-[clamp(2.75rem,7vw,5.25rem)]">
-              Come see what&apos;s fresh
-            </h2>
-            <dl className="mt-8 grid gap-6 sm:grid-cols-2">
-              <div>
-                <dt className="flex items-center gap-2 font-semibold text-citrus">
-                  <Icon name="pin" /> Address
-                </dt>
-                <dd className="mt-2 text-cream/90">
-                  {business.address.centre}
-                  <br />
-                  {business.address.street}
-                  <br />
-                  {business.address.suburb} {business.address.state} {business.address.postcode}
-                </dd>
+      <section className="market-values" aria-label="Our values">
+        <div className="market-wrap">
+          {[
+            { icon: "✿", title: "Fresh.", copy: "Selected with care every day." },
+            { icon: "♡", title: "Local.", copy: "Your neighbourhood market in Guildford." },
+            { icon: "♧", title: "Family.", copy: "At the heart of everything we do." },
+          ].map((v, i) => (
+            <Reveal key={v.title} delay={i * 80}>
+              <div className={`market-value market-value-${i}`}>
+                <span aria-hidden="true">{v.icon}</span>
+                <h2>{v.title}</h2>
+                <p>{v.copy}</p>
               </div>
-              <div>
-                <dt className="flex items-center gap-2 font-semibold text-citrus">
-                  <Icon name="clock" /> Hours
-                </dt>
-                <dd className="mt-2 text-cream/90">
-                  Open 7 days
-                  <br />
-                  {formatTime(hours.open)} to {formatTime(hours.close)}
-                </dd>
-              </div>
-              <div className="sm:col-span-2">
-                <dt className="flex items-center gap-2 font-semibold text-citrus">
-                  <Icon name="car" /> Parking
-                </dt>
-                <dd className="mt-2 text-cream/90">{business.parkingNote}</dd>
-              </div>
-            </dl>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <a
-                href={business.links.googleDirections}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn-citrus"
-              >
-                <Icon name="directions" />
-                Get directions
-                <span className="sr-only">(opens Google Maps in a new tab)</span>
-              </a>
-              <Link href="/visit" className="btn btn-outline text-cream">
-                Visit details
+            </Reveal>
+          ))}
+        </div>
+      </section>
+      <section className="market-wrap market-categories" aria-labelledby="categories-heading">
+        <div className="market-section-head">
+          <h2 id="categories-heading">
+            Shop by Category <span aria-hidden="true">❧</span>
+          </h2>
+          <Link href="/produce">Explore the market →</Link>
+        </div>
+        <div className="market-category-grid">
+          {cards.map((cat, i) => (
+            <Reveal key={cat.id} delay={i * 65}>
+              <Link className="market-category" href={cat.id === "specials" ? "/specials" : `/produce#${cat.id}`}>
+                <div className="market-category-photo">
+                  <Photo
+                    image={cat.image}
+                    fallbackLabel={cat.name}
+                    sizes="(min-width:1024px) 19vw, (min-width:640px) 45vw, 90vw"
+                  />
+                </div>
+                <div className="market-category-copy">
+                  <h3>{cat.id === "greens" ? "Greens" : cat.id === "pantry" ? "Pantry" : cat.name}</h3>
+                  <p>{cat.strapline}</p>
+                  <span aria-hidden="true">→</span>
+                </div>
               </Link>
-            </div>
-          </div>
-          <MapEmbed />
+            </Reveal>
+          ))}
         </div>
       </section>
-
-      {/* Click & collect pitch */}
-      <section aria-labelledby="preview-heading" className="band-berry relative overflow-hidden">
-        <div className="mx-auto grid max-w-7xl gap-10 px-4 py-16 sm:px-6 md:grid-cols-[1fr_auto] md:items-center md:py-24 lg:px-8">
-          <div>
-            <p className="sticker mb-5 bg-[var(--fruit-banana)] text-ink">A taste of what&apos;s possible · Demo</p>
-            <h2 id="preview-heading" className="sign max-w-3xl text-[clamp(2.75rem,7vw,5.25rem)]">
-              Picture ordering ahead
+      <section className="market-about">
+        <div className="market-wrap market-split">
+          <Reveal>
+            <p className="eyebrow">❧ About Hamze Brothers</p>
+            <h2>
+              A local market,
+              <br />
+              <span>family values.</span>
             </h2>
-            <p className="mt-5 max-w-2xl text-lg text-cream/90">
-              This is a working preview of how click-and-collect could look at Hamze Brothers. Browse the market, fill a
-              basket and pick a collection time. It&apos;s a demonstration only: nothing is ordered, paid for or sent to
-              the shop.
+            <p>
+              Fruit and vegetables, fresh juice and pantry favourites, all under one roof. Discover Hamze Brothers at
+              Guildford Plaza and find something good for your family table.
             </p>
-            <Link href="/shop" className="btn btn-citrus mt-7 text-lg">
-              <Icon name="basket" />
-              Try the shopping preview
+            <Link href="/our-market" className="btn btn-primary">
+              Our Story →
+            </Link>
+          </Reveal>
+          <Reveal>
+            <div className="market-about-photo">
+              <Photo image="inStoreDisplay" fallbackLabel="Our market" sizes="(min-width:768px) 48vw, 92vw" />
+            </div>
+          </Reveal>
+        </div>
+      </section>
+      <section className="market-wrap market-visit" aria-labelledby="visit-heading">
+        <div>
+          <p className="eyebrow">❧ A little closer to fresh</p>
+          <h2 id="visit-heading">Visit the Market</h2>
+          <p>Come for your everyday essentials. Stay for a little inspiration.</p>
+          <address>
+            {business.address.centre}
+            <br />
+            {business.address.street}
+            <br />
+            {business.address.suburb} {business.address.state} {business.address.postcode}
+          </address>
+          <p>
+            <strong>Open 7 days</strong>
+            <br />
+            {formatTime(business.hours.mon.open)}–{formatTime(business.hours.mon.close)}
+          </p>
+          <a
+            href={business.links.googleDirections}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-primary"
+          >
+            Get Directions ↗
+          </a>
+        </div>
+        <MapEmbed />
+      </section>
+      <section className="market-order">
+        <div className="market-wrap market-order-inner">
+          <div className="market-banana" aria-hidden="true">
+            🍋
+          </div>
+          <div>
+            <p className="eyebrow">Online ordering</p>
+            <h2>
+              Order Online <span>Soon!</span>
+            </h2>
+            <p>
+              We’re working on bringing the market experience to your home. Explore our shopping preview in the
+              meantime. No orders or payments are taken.
+            </p>
+            <Link href="/shop" className="btn btn-berry">
+              Explore shopping preview →
             </Link>
           </div>
-          <div className="mx-auto w-[220px] md:w-[300px]">
+          <div className="market-melon">
             <Watermelon />
           </div>
         </div>
       </section>
-    </>
+      <section className="market-wrap market-demo">
+        <div className="market-section-head">
+          <h2>A basket of inspiration</h2>
+          <span>Demo prices · preview only</span>
+        </div>
+        <HarvestBoxes />
+      </section>
+      <GoogleReviewsSection />
+      <SpecialsShowcase />
+      <FruitSurprise />
+    </div>
   );
 }

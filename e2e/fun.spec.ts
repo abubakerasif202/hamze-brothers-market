@@ -25,7 +25,7 @@ test.describe("opening intro", () => {
     const page = await context.newPage();
     await page.goto("/");
     await expect(page.locator(".intro")).toBeHidden();
-    await expect(page.getByRole("link", { name: /shop online/i })).toBeVisible();
+    await expect(page.locator(".market-hero").getByRole("link", { name: /shop online/i })).toBeVisible();
     await context.close();
   });
 });

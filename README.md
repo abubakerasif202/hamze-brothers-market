@@ -138,7 +138,7 @@ The **Online Shopping Preview** (`/shop`) exists to show the owners how online s
 
 ## Information to confirm with the owners
 
-- **Hero image:** `hero-fruit-platter.jpeg` is AI-generated and shown as an illustration (captioned on the page). The owner confirmed on 25 Oct 2026 that they hold a licence for it. Keep the licence on file, and keep the illustration caption unless it is replaced with a real store photo.
+- **Hero image:** The homepage now uses the existing business-owned interior photograph, optimized to WebP. The old licensed fruit platter remains available in the registry. See IMAGE_SOURCES.md for the supplied PDF rights limitation.
 - **Google rating:** the site no longer shows a hardcoded rating; the snapshot in `google-reviews-snapshot.ts` (5.0, 8 ratings) is the only source. The owner confirmed it on 25 Oct 2026; re-check it whenever the Google listing changes.
 - **Opening hours:** 8:00am–9:30pm, 7 days, matching both the Instagram bio and the Google Maps listing (checked 25 Oct 2026). Keep Google, Instagram and `business.ts` in sync when hours change.
 - **Parking:** "parking available at the back of Guildford Plaza" comes from an Instagram post. Please confirm.

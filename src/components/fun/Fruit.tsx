@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 /**
  * Original SVG fruit characters. Pupils follow the cursor through the
@@ -131,6 +131,13 @@ export function Orange({ className = "", flip = false }: { className?: string; f
 
 export function Watermelon({ className = "" }: { className?: string }) {
   const [surprised, setSurprised] = useState(false);
+  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  useEffect(
+    () => () => {
+      if (timer.current) clearTimeout(timer.current);
+    },
+    [],
+  );
   return (
     <button
       type="button"
@@ -138,9 +145,15 @@ export function Watermelon({ className = "" }: { className?: string }) {
       aria-label="Happy Watermelon. Tap for a surprise."
       onClick={() => {
         setSurprised(true);
-        window.setTimeout(() => setSurprised(false), 1400);
+        if (timer.current) clearTimeout(timer.current);
+        timer.current = setTimeout(() => setSurprised(false), 2000);
       }}
     >
+      {surprised && (
+        <span className="melon-speech" role="status">
+          Looking fresh today!
+        </span>
+      )}
       <svg viewBox="0 0 200 130" aria-hidden="true" focusable="false">
         <g className="fruit-body">
           <path

@@ -33,10 +33,10 @@ test.describe("routes", () => {
 });
 
 test.describe("hero", () => {
-  test("uses the fruit platter, labelled as an illustration", async ({ page }) => {
+  test("uses authentic market photography", async ({ page }) => {
     await page.goto("/");
-    await expect(page.locator('img[src*="hero-fruit-platter"]').first()).toBeVisible();
-    await expect(page.getByText(/Illustration: fruit platter/)).toBeVisible();
+    await expect(page.locator('.market-hero img[src*="in-store-display"]')).toBeVisible();
+    await expect(page.getByRole("heading", { level: 1 })).toContainText("family");
     await expect(page.getByText(/Rated 4\.8/)).toHaveCount(0);
   });
 });
@@ -87,7 +87,7 @@ test.describe("reduced motion", () => {
     const page = await context.newPage();
     await page.goto("/");
     await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
-    await expect(page.locator('img[src*="hero-fruit-platter"]').first()).toBeVisible();
+    await expect(page.locator('.market-hero img[src*="in-store-display"]')).toBeVisible();
     await context.close();
   });
 });

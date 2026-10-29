@@ -51,14 +51,14 @@ export const images = {
   },
 
   bloodOrange: {
-    src: "/images/store/blood-orange-squeeze.jpg",
+    src: "/images/hamze/blood-orange-squeeze.webp",
     alt: "Gloved hands pulling apart a ripe blood orange above a crate of oranges at Hamze Brothers",
     width: 1320,
     height: 1330,
     kind: "store",
   },
   inStoreDisplay: {
-    src: "/images/store/in-store-display.jpg",
+    src: "/images/hamze/in-store-display.webp",
     alt: "Inside Hamze Brothers: eggplants on the shelf above stacked rice bags and onion sacks",
     width: 1320,
     height: 780,
